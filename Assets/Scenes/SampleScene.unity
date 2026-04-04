@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.73328, y: -0.29572, z: -10}
+  m_LocalPosition: {x: -1.17, y: -0.58, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -453,7 +453,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -55
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.08499998, y: 0.029999971, z: 0}
@@ -124126,7 +124126,7 @@ Transform:
   m_GameObject: {fileID: 1654565639}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.73328, y: -0.29572, z: -10}
+  m_LocalPosition: {x: -1.17, y: -0.58, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124143,6 +124143,7 @@ GameObject:
   - component: {fileID: 1852367346}
   - component: {fileID: 1852367347}
   - component: {fileID: 1852367348}
+  - component: {fileID: 1852367349}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -124191,6 +124192,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
   SpawnPrefabEnemy: {fileID: 5209915622734181235, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
   spawnRadius: 5
+--- !u!114 &1852367349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852367345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf02c38b95dcd994e88953a96d152cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectables
+  score: 0
 --- !u!1 &2093483741
 GameObject:
   m_ObjectHideFlags: 0
@@ -124202,6 +124216,7 @@ GameObject:
   - component: {fileID: 2093483744}
   - component: {fileID: 2093483743}
   - component: {fileID: 2093483742}
+  - component: {fileID: 2093483745}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -124224,6 +124239,7 @@ MonoBehaviour:
   attackCooldown: 1
   moveInput: {x: 0, y: 0}
   speed: 5
+  spriteRenderer: {fileID: 0}
 --- !u!212 &2093483743
 SpriteRenderer:
   serializedVersion: 2
@@ -124273,7 +124289,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 8425372857728090397, guid: 0d9ed6acc506b1f44a4c30d879c47069, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124292,12 +124308,34 @@ Transform:
   m_GameObject: {fileID: 2093483741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.73328, y: -0.29572, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.17, y: -0.58, z: 0}
+  m_LocalScale: {x: 3.5416, y: 3.5416, z: 3.5416}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2093483745
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093483741}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 11fc028302d5fd84f9b189ff67ad80e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
