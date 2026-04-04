@@ -7,7 +7,6 @@ la destrucción. No usar destructores
 (~Clase) para lógica de gameplay.
 */
 
-using System.Timers;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -19,21 +18,18 @@ public class Enemy : MonoBehaviour
         stats = new BaseStats(9, 10, 3, 1, 20);
     }
 
-    void Start()
+    // Recibir daño desde otras fuentes (por ejemplo Player.Attack)
+    public void TakeDamage(int damage)
     {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void TakeDamage(Player player)
-    {
-        stats.TakeDamage(player.Damage);
+        stats.TakeDamage(damage);
         if (stats.Health <= 0)
         {
+            // Incrementar puntaje global cuando este enemigo muere
+            if (Score.Instance != null)
+            {
+                Score.Instance.AddScore(stats.XP);
+            }
+
             Destroy(gameObject);
         }
     }
