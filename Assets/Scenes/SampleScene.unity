@@ -123962,63 +123962,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &865921071
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5028949455171031076, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5209915622734181235, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
 --- !u!1 &1306581174
 GameObject:
   m_ObjectHideFlags: 0
@@ -124247,7 +124190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1dc5eea6be7cf943aaaf20e80a4d60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
-  SpawnPrefabEnemy: {fileID: 5209915622734181235, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
+  SpawnPrefabEnemy:
+  - {fileID: 5209915622734181235, guid: 58d439eb43cb6724abab62ef37a9cf9b, type: 3}
+  - {fileID: 2405109385477159624, guid: b2711e5668bd08f4caa984770bf31b4b, type: 3}
+  - {fileID: 1988566404451993102, guid: 0071bcd3443b7b64c9988fd716892613, type: 3}
+  - {fileID: 6312722668095009375, guid: 6238a1e4f873ba94d9828fce4d24c547, type: 3}
   spawnRadius: 5
 --- !u!114 &1852367349
 MonoBehaviour:
@@ -124411,13 +124358,13 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093483741}
   m_BodyType: 0
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -124475,4 +124422,3 @@ SceneRoots:
   - {fileID: 1852367346}
   - {fileID: 2093483744}
   - {fileID: 1306581176}
-  - {fileID: 865921071}
