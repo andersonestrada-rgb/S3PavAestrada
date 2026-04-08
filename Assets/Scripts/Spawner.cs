@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject SpawnPrefabEnemy;
+    [SerializeField] private GameObject[] SpawnPrefabEnemy;
     [SerializeField] private float spawnRadius; // radio alrededor del player
 
     void Start()
@@ -47,7 +47,9 @@ public class Spawner : MonoBehaviour
             randomPoint = Vector2.right; // Cualquier dirección es válida. Rigth = (1,0)
         Vector2 edgePoint = randomPoint.normalized * spawnRadius; 
         Vector3 spawnPos = player.transform.position + new Vector3(edgePoint.x, edgePoint.y, 0f);
-        Instantiate(SpawnPrefabEnemy, spawnPos, Quaternion.identity);
+        int randomIndex = Random.Range(0, SpawnPrefabEnemy.Length);
+        Instantiate(SpawnPrefabEnemy[randomIndex], spawnPos, Quaternion.identity);
+
     }
 
     IEnumerator Spawn2() //Este médoto es opcional
@@ -69,7 +71,8 @@ public class Spawner : MonoBehaviour
             randomPoint = Vector2.right;
         Vector2 edgePoint = randomPoint.normalized * spawnRadius;
         Vector3 spawnPos = player.transform.position + new Vector3(edgePoint.x, edgePoint.y, 0f);
-        Instantiate(SpawnPrefabEnemy, spawnPos, Quaternion.identity);
+        int randomIndex = Random.Range(0, SpawnPrefabEnemy.Length);
+        Instantiate(SpawnPrefabEnemy[randomIndex], spawnPos, Quaternion.identity);
 
         yield return new WaitForSeconds(spawnRadius);
     }   
