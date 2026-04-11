@@ -3,8 +3,23 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    // Patrón singleton para acceder desde cualquier lugar (como Score.Instance)
+    public static Spawner Instance { get; private set; }
+
     [SerializeField] private GameObject[] SpawnPrefabEnemy;
+    [SerializeField] private GameObject[] xpOrbPrefab; // Prefab de EsferaXP para instanciar al morir enemigos
     [SerializeField] private float spawnRadius; // radio alrededor del player
+
+    private void Awake()
+    {
+        // Singleton setup
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     void Start()
     {      
@@ -48,8 +63,21 @@ public class Spawner : MonoBehaviour
         Vector2 edgePoint = randomPoint.normalized * spawnRadius; 
         Vector3 spawnPos = player.transform.position + new Vector3(edgePoint.x, edgePoint.y, 0f);
         int randomIndex = Random.Range(0, SpawnPrefabEnemy.Length);
-        Instantiate(SpawnPrefabEnemy[randomIndex], spawnPos, Quaternion.identity);
+        Instantiate(SpawnPrefabEnemy[randomIndex], spawnPos, Quaternion.identity);        
+    }
 
+    // Instancia una esfera de XP en la posición indicada (llamada cuando un enemigo muere)
+    public void DropXPOrb(Vector3 position)
+    {
+        if (xpOrbPrefab == null)
+        {
+            Debug.LogWarning("Spawner: xpOrbPrefab no asignado.");
+            return;
+        }
+
+        int randomIndex = Random.Range(0, xpOrbPrefab.Length);
+        var xpOrb = Instantiate(xpOrbPrefab[randomIndex], position, Quaternion.identity);
+        Debug.Log($"Esfera de XP creada en {position}");
     }
 
     IEnumerator Spawn2() //Este médoto es opcional

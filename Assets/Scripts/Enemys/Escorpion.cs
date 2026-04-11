@@ -16,35 +16,45 @@ public class Escorpion : BaseEntity
         stats = new BaseStats(12, 10, 3, 1, 20);
     }
 
-    public override void TakeDamage(BaseEntity damage)
+    private void Start()
     {
-        base.TakeDamage(damage);
-        Debug.Log(damage.Element);
+        print($"{entityName} es de elemento {element}");
+    }
+     void Update()
+    {
 
-        int damager = damage.Stats.Power;
+    }
 
-        switch (damage.Element)
+    public override void TakeDamage(int damageAmount, Elements damageElement)
+    {
+        float multiplier = 1f;
+        switch (damageElement)
         {
             case Elements.None:
-                //damage = damage;
+                multiplier = 1f;
                 break;
             case Elements.Fire:
-                damager += 4;
+                multiplier = 1.4f; // algo más de daño
                 break;
             case Elements.Water:
-                damager = 0;
+                multiplier = 0.5f; // reducido
                 break;
             case Elements.Earth:
-                damager *= 6;
+                multiplier = 6f; // muy vulnerable
                 break;
             case Elements.Air:
-                damager /= 2;
+                multiplier = 0.5f; // reducido
                 break;
             default:
+                multiplier = 1f;
                 break;
         }
-        print($"{entityName} ha sufrido {damager} punto de daño");
-        
+
+        int damager = Mathf.RoundToInt(damageAmount * multiplier);
+        if (damageAmount > 0 && damager < 1) damager = 1;
+
+        Debug.Log($"{entityName} ha sufrido {damager} punto(s) de daño ({damageElement})");
+        base.TakeDamage(damager, damageElement);
     }
 
 
@@ -64,15 +74,8 @@ public class Escorpion : BaseEntity
     //    }
     //}
 
-    public int Health => stats.Health;
-    public int Power => stats.Power;
-    public int Speed => stats.Speed;
-    public int Knockback => stats.Knockback;
-    public int XP => stats.XP;
 
 
-    private void OnDestroy()
-    {
-        Debug.Log("El enemigo ha muerto");
-    }
+    
+
 }

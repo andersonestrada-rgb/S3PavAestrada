@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class EsferaXP : Collectable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Cuando el Player recoge la esfera, suma su valor al puntaje global
+    protected override void Collect(Player player)
     {
-        
-    }
+        Debug.Log($"Player recogió {collectableName} +{value} XP");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (Score.Instance != null)
+        {
+            Score.Instance.AddScore((int)value);
+        }
     }
 }

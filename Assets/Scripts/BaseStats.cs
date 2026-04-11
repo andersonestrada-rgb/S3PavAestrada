@@ -59,6 +59,7 @@ public class BaseStats
     }
 
     public void TakeDamage(int amount) => SetHealth(Health - amount);   // Resta vida
+    public void HealHealth(int amount) => SetHealth(Health + amount);   // Restaura vida
     public void TakePower(int amount) => SetPower(Power + amount);      // Aumenta poder en base a tu tipo de arma
 
 

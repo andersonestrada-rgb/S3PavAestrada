@@ -42,17 +42,14 @@ public class Player : BaseEntity
     [SerializeField] private SpriteRenderer spriteRenderer;
     private bool facingRight = true;
 
-    public CircleCollider2D coll;
-    public float range;
-    public List<GameObject> Enemys = new();
 
     private void Awake()
     {
         coll = GetComponent<CircleCollider2D>();
         coll.radius = range;
         inputs = new();
-        stats = new BaseStats(50, 10, 5, 1, 20);
-        weaponData = new WeaponData(10, 3, 10);        
+        stats = new BaseStats(50, 35, 5, 1, 20);
+        weaponData = new WeaponData(10, 3, 10);
         // Si no se asignó en el inspector, intentar obtener el SpriteRenderer del mismo GameObject
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -122,78 +119,82 @@ public class Player : BaseEntity
     
     private void OnTriggerEnter2D(Collider2D collision)
     {     
-        if (collision.GetComponent<BaseEntity>() != null)
+        var entity = collision.GetComponent<BaseEntity>();
+        if (entity != null && !(entity is Player))
+        {
             Enemys.Add(collision.gameObject);
+        }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         Enemys.Remove(collision.gameObject);
     }
 
 
-    private void OnDestroy()
-    {
-        Debug.Log("oh no me cancelaron");
-    }
-
     public void Attack()
     {
         print("ATAQUE!");
 
-        foreach (GameObject enemy in Enemys)
-        {            
+        // Iterar sobre una copia para evitar InvalidOperationException si la lista se modifica
+        foreach (GameObject enemy in Enemys.ToArray())
+        {
+            if (enemy == null) continue;
             float distance = Vector3.Distance(enemy.transform.position, transform.position);
-            if (distance <= range && enemy.GetComponent<BaseEntity>() != null)
-                enemy.GetComponent<BaseEntity>().TakeDamage(this);
+            var entity = enemy.GetComponent<BaseEntity>();
+            if (distance <= range && entity != null)
+                entity.TakeDamage(this.Damage, this.Element);
         }
     }
        
 
-    public InputSystem_Actions inputs;    
-
-    public int Health => stats.Health;
-    public int Power => stats.Power;
-    public int Speed => stats.Speed;
-    public int Knockback => stats.Knockback;
-    public int XP => stats.XP;
-
+    public InputSystem_Actions inputs;
+    
     public int Damage => weaponData.Damage;
     public int Range => weaponData.Range;
     public int Ammo => weaponData.Ammo;
 
-    
+    public CircleCollider2D coll;
+    public float range;
+    public List<GameObject> Enemys = new();
 
-    public override void TakeDamage(BaseEntity damage)
+    public override void TakeDamage(int damageAmount, Elements damageElement)
     {
-        
+        Debug.Log(damageElement);
 
-        Debug.Log(damage.Element);
-
-        int damager = damage.Stats.Power;
-
-        switch (damage.Element)
+        float multiplier = 1f;
+        switch (damageElement)
         {
             case Elements.None:
-                //damage = damage;
+                multiplier = 1f;
                 break;
             case Elements.Fire:
-                damager *= 2;
+                multiplier = 2f;
                 break;
             case Elements.Water:
-                damager /= 2;
+                multiplier = 0.5f;
                 break;
             case Elements.Earth:
-                damager *= 3;
+                multiplier = 3f;
                 break;
             case Elements.Air:
-                damager = 0;
+                multiplier = 0.5f;
                 break;
             default:
+                multiplier = 1f;
                 break;
         }
-        base.TakeDamage(damage);
-        
+
+        int damager = Mathf.RoundToInt(damageAmount * multiplier);
+        if (damageAmount > 0 && damager < 1) damager = 1;
+
+        Debug.Log($"{entityName} ha sufrido {damager} punto(s) de daño ({damageElement})");
+        base.TakeDamage(damager, damageElement);
     }
+
+
+
+
 
     // Permite asignar o cambiar el arma del jugador
     public void SetWeapon(WeaponData weaponData)

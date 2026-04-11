@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class Pocion : Collectable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Cuando el Player recoge la poción, restaura su vida
+    protected override void Collect(Player player)
     {
-        
-    }
+        int healthRestored = (int)value;
+        Debug.Log($"Player recogió {collectableName} y restauró {healthRestored} de vida");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        player.HealHealth(healthRestored);
     }
 }
