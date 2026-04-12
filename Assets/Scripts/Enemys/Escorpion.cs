@@ -8,74 +8,22 @@ la destrucción. No usar destructores
 */
 
 using UnityEngine;
-
 public class Escorpion : BaseEntity
-{   
-    private void Awake()
-    {
-        stats = new BaseStats(12, 10, 3, 1, 20);
-    }
-
+{    
     private void Start()
     {
         print($"{entityName} es de elemento {element}");
     }
-     void Update()
+   
+    protected override float GetElementalMultiplier(Elements damageElement)
     {
-
-    }
-
-    public override void TakeDamage(int damageAmount, Elements damageElement)
-    {
-        float multiplier = 1f;
-        switch (damageElement)
+        return damageElement switch
         {
-            case Elements.None:
-                multiplier = 1f;
-                break;
-            case Elements.Fire:
-                multiplier = 1.4f; // algo más de daño
-                break;
-            case Elements.Water:
-                multiplier = 0.5f; // reducido
-                break;
-            case Elements.Earth:
-                multiplier = 6f; // muy vulnerable
-                break;
-            case Elements.Air:
-                multiplier = 0.5f; // reducido
-                break;
-            default:
-                multiplier = 1f;
-                break;
-        }
-
-        int damager = Mathf.RoundToInt(damageAmount * multiplier);
-        if (damageAmount > 0 && damager < 1) damager = 1;
-
-        Debug.Log($"{entityName} ha sufrido {damager} punto(s) de daño ({damageElement})");
-        base.TakeDamage(damager, damageElement);
+            Elements.Fire => 1.4f,  // algo más de daño
+            Elements.Water => 0.5f, // reducido
+            Elements.Earth => 6f,   // muy vulnerable
+            Elements.Air => 0.5f,   // reducido
+            _ => 1f                 // Default (None y otros)
+        };
     }
-
-
-    // Recibir daño desde otras fuentes (por ejemplo Player.Attack)
-    //public void TakeDamage(int damage)
-    //{
-    //    stats.TakeDamage(damage);
-    //    if (stats.Health <= 0)
-    //    {
-    //        // Incrementar puntaje global cuando este enemigo muere
-    //        if (Score.Instance != null)
-    //        {
-    //            Score.Instance.AddScore(stats.XP);
-    //        }
-
-    //        Destroy(gameObject);
-    //    }
-    //}
-
-
-
-    
-
 }

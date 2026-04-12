@@ -11,13 +11,14 @@ inicializarla en Awake.
 
 using UnityEngine;
 
+[System.Serializable]
 public class WeaponData
 {
 
     // Relación de Composición
-    private int damage;
-    private int range;
-    private int ammo;    
+    [SerializeField]private int damage;
+    [SerializeField]private int range;
+    [SerializeField]private int ammo;    
 
     public WeaponData(int damage, int range, int ammo)
     {

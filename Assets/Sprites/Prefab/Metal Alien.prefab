@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1685583760047598513}
   - component: {fileID: 2943939744204162098}
   - component: {fileID: -7246730597208779016}
+  - component: {fileID: 2740121176768950201}
   m_Layer: 0
   m_Name: Metal Alien
   m_TagString: Enemy
@@ -178,3 +179,21 @@ MonoBehaviour:
   entityName: Alien de metal
   enetityDescription: Es muy duro
   element: 4
+  stats:
+    health: 16
+    power: 18
+    speed: 1
+    knockback: 1
+    xp: 26
+--- !u!114 &2740121176768950201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51455115308763134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342de172b023d21468c09336553915dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow

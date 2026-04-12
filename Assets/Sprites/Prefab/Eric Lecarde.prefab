@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8118801285478202401}
   - component: {fileID: 4624549009183817030}
   - component: {fileID: -2710673941594438590}
+  - component: {fileID: 7316083746545558589}
   m_Layer: 0
   m_Name: Eric Lecarde
   m_TagString: Enemy
@@ -178,3 +179,21 @@ MonoBehaviour:
   entityName: EricLecarde
   enetityDescription: Es de agua?
   element: 2
+  stats:
+    health: 14
+    power: 20
+    speed: 2
+    knockback: 2
+    xp: 40
+--- !u!114 &7316083746545558589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3565371610373251006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342de172b023d21468c09336553915dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow

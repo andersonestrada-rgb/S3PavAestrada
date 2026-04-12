@@ -29,34 +29,30 @@ métodos.
 
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : BaseEntity
-{    
-    private WeaponData weaponData;
-
+{
+    [Header("Configuración de Ataque")]
+    [SerializeField] private WeaponData weaponData;
     [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private Vector2 moveInput;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    private bool facingRight = true;
 
+    private SpriteRenderer spriteRenderer; 
+    private Vector2 moveInput;
+    private bool facingRight = true;       
 
     private void Awake()
-    {
-        coll = GetComponent<CircleCollider2D>();
-        coll.radius = range;
-        inputs = new();
-        stats = new BaseStats(50, 35, 5, 1, 20);
-        weaponData = new WeaponData(10, 3, 10);
-        // Si no se asignó en el inspector, intentar obtener el SpriteRenderer del mismo GameObject
+    {       
+        inputs = new();       
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
+        // Sistema de ataque automático
         InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
     }
 
@@ -66,9 +62,8 @@ public class Player : BaseEntity
         {
             MovementMechanism(moveInput);
         }
-        
-        // Usar un umbral para evitar fluctuaciones por entradas pequeñas
-        const float flipThreshold = 0.01f;
+
+        const float flipThreshold = 0.01f; // Evitar cambios de dirección por inputs muy pequeños
         if (Mathf.Abs(moveInput.x) > flipThreshold && spriteRenderer != null)
         {
             if (moveInput.x < 0f && facingRight)
@@ -82,11 +77,11 @@ public class Player : BaseEntity
                 facingRight = true;
             }
         }
-    }   
+    }
 
     private void OnEnable()
     {
-        inputs.Enable();        
+        inputs.Enable();
         inputs.Player.Move.performed += OnMovement;
         inputs.Player.Move.canceled += OnMovement;
     }
@@ -98,27 +93,11 @@ public class Player : BaseEntity
 
     private void MovementMechanism(Vector2 input)
     {
-        transform.position += (Vector3)input * speed * Time.deltaTime;
+        transform.position += (Vector3)input * stats.Speed * Time.deltaTime;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        GameObject player =  GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            Gizmos.DrawWireSphere(player.transform.position, weaponData.Range);
-        }
-        else
-        {
-            // si no hay player, dibujar el rango de ataque en la posicion de este script
-            Gizmos.DrawWireSphere(transform.position, weaponData.Range);
-        }
-    }
-   
-    
     private void OnTriggerEnter2D(Collider2D collision)
-    {     
+    {
         var entity = collision.GetComponent<BaseEntity>();
         if (entity != null && !(entity is Player))
         {
@@ -131,74 +110,71 @@ public class Player : BaseEntity
         Enemys.Remove(collision.gameObject);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        // Dibuja el rango de ataque (Rojo)
+        Gizmos.color = Color.red;
+        float currentAttackRange = weaponData != null ? weaponData.Range : 3f; // 3f como predeterminado visual
+        Gizmos.DrawWireSphere(transform.position, currentAttackRange);
+    }
+    // Propiedades
+    public int Damage => weaponData != null ? weaponData.Damage : 0;
+    public float AttackRange => weaponData != null ? weaponData.Range : 0f;
+    public int Ammo => weaponData.Ammo;
+
+    public List<GameObject> Enemys = new();
+    public InputSystem_Actions inputs;
+
+    //public static Player Instance { get; private set; }
 
     public void Attack()
     {
-        print("ATAQUE!");
+        // 1. Busca enemigo
+        GameObject[] enemies = Enemys.ToArray();
 
-        // Iterar sobre una copia para evitar InvalidOperationException si la lista se modifica
-        foreach (GameObject enemy in Enemys.ToArray())
+        foreach (GameObject enemyObj in enemies)
         {
-            if (enemy == null) continue;
-            float distance = Vector3.Distance(enemy.transform.position, transform.position);
-            var entity = enemy.GetComponent<BaseEntity>();
-            if (distance <= range && entity != null)
-                entity.TakeDamage(this.Damage, this.Element);
+            if (enemyObj == null) continue;
+
+            // 2. Calcula distancia
+            float distance = Vector3.Distance(enemyObj.transform.position, transform.position);
+
+            // 3. Aplica daño si está en rango
+            if (distance <= AttackRange)
+            {
+                var enemyEntity = enemyObj.GetComponent<BaseEntity>();
+                if (enemyEntity != null)
+                {
+                    // La vida no se modifica directamente, se usa TakeDamage con su elemento
+                    enemyEntity.TakeDamage(this.Damage, this.Element);
+                }
+            }
         }
     }
-       
 
-    public InputSystem_Actions inputs;
-    
-    public int Damage => weaponData.Damage;
-    public int Range => weaponData.Range;
-    public int Ammo => weaponData.Ammo;
-
-    public CircleCollider2D coll;
-    public float range;
-    public List<GameObject> Enemys = new();
-
+    // Sobreescritura del daño elemental recibido
     public override void TakeDamage(int damageAmount, Elements damageElement)
     {
-        Debug.Log(damageElement);
-
         float multiplier = 1f;
         switch (damageElement)
         {
-            case Elements.None:
-                multiplier = 1f;
-                break;
-            case Elements.Fire:
-                multiplier = 2f;
-                break;
-            case Elements.Water:
-                multiplier = 0.5f;
-                break;
-            case Elements.Earth:
-                multiplier = 3f;
-                break;
-            case Elements.Air:
-                multiplier = 0.5f;
-                break;
-            default:
-                multiplier = 1f;
-                break;
+            case Elements.Fire: multiplier = 2f; break;
+            case Elements.Water: multiplier = 0.5f; break;
+            case Elements.Earth: multiplier = 3f; break;
+            case Elements.Air: multiplier = 0.5f; break;
+            case Elements.None: default: multiplier = 1f; break;
         }
 
-        int damager = Mathf.RoundToInt(damageAmount * multiplier);
-        if (damageAmount > 0 && damager < 1) damager = 1;
+        int finalDamage = Mathf.RoundToInt(damageAmount * multiplier);
+        if (damageAmount > 0 && finalDamage < 1) finalDamage = 1;
 
-        Debug.Log($"{entityName} ha sufrido {damager} punto(s) de daño ({damageElement})");
-        base.TakeDamage(damager, damageElement);
+        base.TakeDamage(finalDamage, damageElement); // Modifica vida mediante el método base
     }
 
-
-
-
-
-    // Permite asignar o cambiar el arma del jugador
-    public void SetWeapon(WeaponData weaponData)
+    public void SetWeapon(WeaponData newWeapon)
     {
-        this.weaponData = weaponData;
-    }   
+        this.weaponData = newWeapon;
+    }
+
+   
 }

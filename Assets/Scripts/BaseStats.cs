@@ -10,14 +10,16 @@ inicializarla en Awake.
 
 using UnityEngine;
 
+[System.Serializable]
 public class BaseStats
 {
     // Relación de Composición
-    private int health;
-    private int power;
-    private int speed;
-    private int knockback;
-    private int xp;
+
+    [SerializeField] private int health;
+    [SerializeField] private int power;
+    [SerializeField] private int speed;
+    [SerializeField] private int knockback;
+    [SerializeField] private int xp;
 
     public BaseStats(int health, int power, int speed, int knockback, int xp)
     {
@@ -27,42 +29,40 @@ public class BaseStats
         SetKnockback(knockback);
         SetXP(xp);
     }
+
     public void SetPower(int power)
     {
-        if (power <= 0)
-            power = 0;
+        if (power <= 0) power = 0;
         this.power = power;
     }
+
     public void SetHealth(int health)
     {
-        if (health <= 0)
-            health = 0;
+        if (health <= 0) health = 0;
         this.health = health;
     }
+
     public void SetSpeed(int speed)
     {
-        if (speed <= 0)
-            speed = 0;
+        if (speed <= 0) speed = 0;
         this.speed = speed;
     }
+
     public void SetKnockback(int knockback)
     {
-        if (knockback <= 0)
-            knockback = 0;
+        if (knockback <= 0) knockback = 0;
         this.knockback = knockback;
     }
+
     public void SetXP(int xp)
     {
-        if (xp <= 0)
-            xp = 0;
+        if (xp <= 0) xp = 0;
         this.xp = xp;
     }
 
-    public void TakeDamage(int amount) => SetHealth(Health - amount);   // Resta vida
-    public void HealHealth(int amount) => SetHealth(Health + amount);   // Restaura vida
-    public void TakePower(int amount) => SetPower(Power + amount);      // Aumenta poder en base a tu tipo de arma
-
-
+    public void TakeDamage(int amount) => SetHealth(Health - amount);
+    public void HealHealth(int amount) => SetHealth(Health + amount);
+    public void TakePower(int amount) => SetPower(Power + amount);
 
     public int Health => health;
     public int Power => power;

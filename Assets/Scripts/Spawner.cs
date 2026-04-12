@@ -6,13 +6,15 @@ public class Spawner : MonoBehaviour
     // Patrón singleton para acceder desde cualquier lugar (como Score.Instance)
     public static Spawner Instance { get; private set; }
 
+    [Header("Configuración de Spawn")]
     [SerializeField] private GameObject[] SpawnPrefabEnemy;
     [SerializeField] private GameObject[] xpOrbPrefab; // Prefab de EsferaXP para instanciar al morir enemigos
-    [SerializeField] private float spawnRadius; // radio alrededor del player
+    [SerializeField] private float spawnRadius; 
+    [SerializeField] private float SpawnIntervalue;
 
     private void Awake()
     {
-        // Singleton setup
+        // Configuración del Singleton 
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -23,10 +25,9 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {      
-        InvokeRepeating(nameof(Spawn), 0, 2f); 
+        InvokeRepeating(nameof(Spawn), 0, SpawnIntervalue); 
     }
-
-    //Dibujo del radio de spawn (spawnRadius)
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

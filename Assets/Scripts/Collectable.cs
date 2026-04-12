@@ -3,50 +3,27 @@ using UnityEngine;
 
 public abstract class Collectable : MonoBehaviour
 {
-    [SerializeField] private GameObject Recolector; // Objeto que detecta la colisión para recoger el collectable (puede ser el player o un objeto hijo)
     [SerializeField] protected string collectableName;
     [SerializeField] protected string collectableDescription;
-    [SerializeField] protected float value; //Sube la vida, el mana o la experiencia dependiendo del tipo de collectable       
+    [SerializeField] protected float value;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null || Recolector != null)
+        // 1. Verificamos si el que colisionó es el Colector
+        var colector = collision.GetComponent<Colector>();
+
+        // 2. Si es el Colector y tiene un Player asignado, aplicamos el efecto
+        if (colector != null && colector.player != null)
         {
-           var recolector = collision.gameObject; 
+            Collect(colector.player);
+
+            // 3. Destruimos el objeto para que no se recoja más de una vez
             Destroy(gameObject);
         }
     }
 
-
-    if (collision.CompareTag("Recolectador"))
-        {           
-            var player = collision.GetComponent<Player>();
-            if (player == null)
-                player = collision.GetComponentInParent<Player>();
-
-            if (player != null)
-            {
-                CollectBy(player);
-    Destroy(gameObject);
-}
-        }
-
-    /// <summary>
-    /// Método público que permite ser recolectado por RadiusCollector o contacto directo
-    /// </summary>
-    public void CollectBy(Player player)
-    {
-        if (player != null)
-        {
-            Collect(player);
-        }
-    }
-
-    // Cada tipo de collectable define su propio efecto al ser recogido
     protected abstract void Collect(Player player);
-
 
     public string CollectableName => collectableName;
     public float Value => value;
-
 }

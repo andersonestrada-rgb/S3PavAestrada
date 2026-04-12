@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -2420497094785485008}
   - component: {fileID: 8976836781890556272}
   - component: {fileID: -7545535764234666129}
+  - component: {fileID: -62148091753340702}
   m_Layer: 0
   m_Name: Escorpion
   m_TagString: Enemy
@@ -110,6 +111,12 @@ MonoBehaviour:
   entityName: Escopion
   enetityDescription: "Ente debil pero con da\xF1o grande"
   element: 3
+  stats:
+    health: 12
+    power: 10
+    speed: 3
+    knockback: 1
+    xp: 20
 --- !u!95 &8976836781890556272
 Animator:
   serializedVersion: 7
@@ -178,3 +185,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.34, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &-62148091753340702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209915622734181235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342de172b023d21468c09336553915dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow
