@@ -12,7 +12,7 @@ Player debe implementar un método Attack
 que busque enemigos con FindObjectsWithTag, 
 calcule distancia y aplique daño a todos los 
 que estén dentro del rango respetando el 
-tiempo entre ataques.
+tiempo entre ataquesV5
 
 2️ Sistema de combate con daño elemental:
 El Player debe poder atacar automáticamente 
@@ -41,7 +41,7 @@ public class Player : BaseEntity
     [SerializeField] private float attackCooldown = 1f;
 
     [Header("Efectos Visuales")]
-    [SerializeField] private float damageFlashDuration = 0.15f;
+    [SerializeField] private float damageFlashDuration;
     private Color originalColor;
 
     [SerializeField] private SpriteRenderer spriteRenderer;

@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class MetalAlien : BaseEntity
 {
+
+    [SerializeField] private float collisionAttackCooldown = 1f;
+    private float lastCollisionAttackTime = -Mathf.Infinity;
+
     void Start()
     {
         print($"{entityName} es de elemento {element}");
@@ -21,11 +25,16 @@ public class MetalAlien : BaseEntity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verificamos si el objeto con el que chocamos tiene el script Player
-        if (collision.gameObject.TryGetComponent(out Player player))
+        // Evitamos aplicar daño si el cooldown no ha expirado
+        if (Time.time - lastCollisionAttackTime < collisionAttackCooldown)
+            return;
+
+        // Verificamos si el objeto con el que chocamos tiene el script Colector
+        if (collision.gameObject.TryGetComponent(out Colector colector))
         {
             // Le aplicamos daño al Player usando el Poder y Elemento de este enemigo
-            player.TakeDamage(this.Power, this.Element);
+            colector.player.TakeDamage(stats.Power, element);
+            lastCollisionAttackTime = Time.time;
         }
     }
 
