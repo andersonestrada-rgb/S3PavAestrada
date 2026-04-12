@@ -124,7 +124,7 @@ public class Player : BaseEntity
     // Propiedades
     public int Damage => weaponData != null ? weaponData.Damage : 0;
     public float AttackRange => weaponData != null ? weaponData.Range : 0f;
-    public int Ammo => weaponData.Ammo;
+    public int Ammo => weaponData != null ? weaponData.Ammo : 0;
 
     public List<GameObject> Enemys = new();
     public InputSystem_Actions inputs;
