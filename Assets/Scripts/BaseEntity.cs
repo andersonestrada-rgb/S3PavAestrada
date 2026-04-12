@@ -31,7 +31,7 @@ public class BaseEntity : MonoBehaviour
     [SerializeField] protected string entityName;
     [SerializeField] protected string enetityDescription;
     [SerializeField] protected Elements element;
-    [SerializeField] protected BaseStats stats;
+    [SerializeField] protected BaseStats stats;    
 
     private void OnDestroy()
     {

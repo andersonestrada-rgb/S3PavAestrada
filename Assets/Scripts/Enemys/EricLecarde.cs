@@ -1,7 +1,11 @@
 using UnityEngine;
 
 public class EricLecarde : BaseEntity
-{  
+{
+    [SerializeField] private float collisionAttackCooldown = 1f;
+    private float lastCollisionAttackTime = -Mathf.Infinity;
+
+
     void Start()
     {
         print($"{entityName} es de elemento {element}");
@@ -18,14 +22,20 @@ public class EricLecarde : BaseEntity
         };
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verificamos si el objeto con el que chocamos tiene el script Player
+        // Evitamos aplicar daño si el cooldown no ha expirado
+        if (Time.time - lastCollisionAttackTime < collisionAttackCooldown)
+            return;
+
+        // Verificamos si el objeto con el que chocamos tiene el script Colector
         if (collision.gameObject.TryGetComponent(out Colector colector))
         {
             // Le aplicamos daño al Player usando el Poder y Elemento de este enemigo
             colector.player.TakeDamage(stats.Power, element);
-            //player.TakeDamage(this.Power, this.Element);
+            lastCollisionAttackTime = Time.time;
         }
     }
 }
