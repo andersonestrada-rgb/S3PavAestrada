@@ -124480,13 +124480,14 @@ MonoBehaviour:
     power: 20
     speed: 5
     knockback: 1
-    xp: 0
+    xp: 1
   weaponData:
     damage: 10
     range: 5
     ammo: 10
   attackCooldown: 4
   damageFlashDuration: 1
+  spriteRenderer: {fileID: 2093483743}
   Enemys: []
 --- !u!212 &2093483743
 SpriteRenderer:
