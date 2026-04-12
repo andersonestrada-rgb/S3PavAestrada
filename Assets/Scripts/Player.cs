@@ -39,13 +39,17 @@ public class Player : BaseEntity
     [SerializeField] private WeaponData weaponData;
     [SerializeField] private float attackCooldown = 1f;
 
-    private SpriteRenderer spriteRenderer; 
+
+    private SpriteRenderer spriteRenderer;
+
     private Vector2 moveInput;
     private bool facingRight = true;       
 
     private void Awake()
+
     {       
         inputs = new();       
+
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -173,8 +177,7 @@ public class Player : BaseEntity
 
     public void SetWeapon(WeaponData newWeapon)
     {
-        this.weaponData = newWeapon;
-    }
 
-   
+        this.weaponData = newWeapon;
+    }   
 }
