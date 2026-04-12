@@ -118,7 +118,7 @@ public class Player : BaseEntity
     {
         // Dibuja el rango de ataque (Rojo)
         Gizmos.color = Color.red;
-        float currentAttackRange = weaponData != null ? weaponData.Range : 3f; // 3f como predeterminado visual
+        float currentAttackRange = weaponData != null ? weaponData.Range : 2f; // 2f como predeterminado visual
         Gizmos.DrawWireSphere(transform.position, currentAttackRange);
     }
     // Propiedades
