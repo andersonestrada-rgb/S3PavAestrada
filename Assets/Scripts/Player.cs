@@ -48,6 +48,13 @@ public class Player : BaseEntity
     private Vector2 moveInput;
     private bool facingRight = true;
 
+    // Progresión del jugador
+    [Header("Progresión")]
+    [SerializeField] private int level = 1;
+    [SerializeField] private int currentXP = 0;
+    [SerializeField] private int xpToNextLevel = 100;
+    [SerializeField] private int xpIncreasePerLevel = 50;
+
     private void Awake()
     {
         inputs = new();
@@ -58,7 +65,7 @@ public class Player : BaseEntity
         }
         else
         {
-            Debug.LogWarning("⚠️ No se encontró un SpriteRenderer en el Player ni en sus hijos.");
+            Debug.LogWarning("No se encontró un SpriteRenderer en el Player ni en sus hijos.");
         }
     }
 
@@ -192,4 +199,36 @@ public class Player : BaseEntity
         yield return new WaitForSeconds(damageFlashDuration);
         spriteRenderer.color = originalColor;
     }
+
+    // ----- Sistema de experiencia / niveles -----
+    public void AddExperience(int amount)
+    {
+        if (amount <= 0) return;
+        currentXP += amount;
+        Debug.Log($"Experiencia +{amount} => {currentXP}/{xpToNextLevel}");
+
+        while (currentXP >= xpToNextLevel)
+        {
+            currentXP -= xpToNextLevel;
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        level++;
+        xpToNextLevel += xpIncreasePerLevel;
+
+        // Ejemplo: mejorar stats al subir de nivel
+        stats.SetPower(stats.Power + 1);
+        stats.SetHealth(stats.Health + 10);
+        // Podría añadirse curación completa o mejoras adicionales aquí
+
+        Debug.Log($"¡Nivel {level}! Nuevas stats: Power={stats.Power}, Health={stats.Health}");
+    }
+
+    // Propiedades públicas usadas por UI
+    public int Level => level;
+    public int CurrentXP => currentXP;
+    public int XPToNextLevel => xpToNextLevel;
 }

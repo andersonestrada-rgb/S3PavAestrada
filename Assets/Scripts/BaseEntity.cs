@@ -65,7 +65,21 @@ public class BaseEntity : MonoBehaviour
             print($"{entityName} ha sido derrotado");
             if (Score.Instance != null) Score.Instance.AddScore(stats.XP);
             if (Spawner.Instance != null && !(this is Player)) Spawner.Instance.DropXPOrb(transform.position);
-            Destroy(gameObject);
+
+            // Dar XP al Player directamente cuando un enemigo muere
+            if (!(this is Player))
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                {
+                    var player = playerObj.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        player.AddExperience(stats.XP);
+                    }
+                }
+            }
+            Destroy(gameObject);                                 
         }
     }
 

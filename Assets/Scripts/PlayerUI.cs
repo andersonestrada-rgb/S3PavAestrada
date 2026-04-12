@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -21,6 +21,6 @@ public class PlayerUI : MonoBehaviour
 
         // Muestra la XP del player y el puntaje actual (Score). Maneja Score.Instance nulo.
         int currentScore = Score.Instance != null ? Score.Instance.CurrentScore : 0;
-        xpText.text = $"Experiencia: {player.XP}  |  Puntaje: {currentScore}";
+        xpText.text = $"Nivel: {player.Level}  XP: {player.CurrentXP}/{player.XPToNextLevel}  |  Puntaje: {currentScore}";
     }
 }
