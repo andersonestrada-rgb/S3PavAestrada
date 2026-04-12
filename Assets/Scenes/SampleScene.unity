@@ -124477,15 +124477,16 @@ MonoBehaviour:
   element: 4
   stats:
     health: 50
-    power: 50
+    power: 20
     speed: 5
     knockback: 1
     xp: 0
   weaponData:
-    damage: 20
+    damage: 10
     range: 5
     ammo: 10
-  attackCooldown: 0.5
+  attackCooldown: 4
+  damageFlashDuration: 1
   Enemys: []
 --- !u!212 &2093483743
 SpriteRenderer:

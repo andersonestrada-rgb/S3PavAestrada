@@ -27,6 +27,7 @@ directamente: debe actualizarse únicamente mediante
 métodos.
 */
 
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -39,24 +40,30 @@ public class Player : BaseEntity
     [SerializeField] private WeaponData weaponData;
     [SerializeField] private float attackCooldown = 1f;
 
+    [Header("Efectos Visuales")]
+    [SerializeField] private float damageFlashDuration = 0.15f;
+    private Color originalColor;
 
-    private SpriteRenderer spriteRenderer;
-
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
-    private bool facingRight = true;       
+    private bool facingRight = true;
 
     private void Awake()
+    {
+        inputs = new();
 
-    {       
-        inputs = new();       
-
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No se encontró un SpriteRenderer en el Player ni en sus hijos.");
+        }
     }
 
     void Start()
     {
-        // Sistema de ataque automático
         InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
     }
 
@@ -67,7 +74,7 @@ public class Player : BaseEntity
             MovementMechanism(moveInput);
         }
 
-        const float flipThreshold = 0.01f; // Evitar cambios de dirección por inputs muy pequeños
+        const float flipThreshold = 0.01f;
         if (Mathf.Abs(moveInput.x) > flipThreshold && spriteRenderer != null)
         {
             if (moveInput.x < 0f && facingRight)
@@ -116,12 +123,11 @@ public class Player : BaseEntity
 
     private void OnDrawGizmosSelected()
     {
-        // Dibuja el rango de ataque (Rojo)
         Gizmos.color = Color.red;
-        float currentAttackRange = weaponData != null ? weaponData.Range : 2f; // 2f como predeterminado visual
+        float currentAttackRange = weaponData != null ? weaponData.Range : 2f;
         Gizmos.DrawWireSphere(transform.position, currentAttackRange);
     }
-    // Propiedades
+
     public int Damage => weaponData != null ? weaponData.Damage : 0;
     public float AttackRange => weaponData != null ? weaponData.Range : 0f;
     public int Ammo => weaponData != null ? weaponData.Ammo : 0;
@@ -129,55 +135,61 @@ public class Player : BaseEntity
     public List<GameObject> Enemys = new();
     public InputSystem_Actions inputs;
 
-    //public static Player Instance { get; private set; }
-
     public void Attack()
     {
-        // 1. Busca enemigo
         GameObject[] enemies = Enemys.ToArray();
 
         foreach (GameObject enemyObj in enemies)
         {
             if (enemyObj == null) continue;
 
-            // 2. Calcula distancia
             float distance = Vector3.Distance(enemyObj.transform.position, transform.position);
 
-            // 3. Aplica daño si está en rango
             if (distance <= AttackRange)
             {
                 var enemyEntity = enemyObj.GetComponent<BaseEntity>();
                 if (enemyEntity != null)
                 {
-                    // La vida no se modifica directamente, se usa TakeDamage con su elemento
                     enemyEntity.TakeDamage(this.Damage, this.Element);
                 }
             }
         }
     }
 
-    // Sobreescritura del daño elemental recibido
+    protected override float GetElementalMultiplier(Elements damageElement)
+    {
+        return damageElement switch
+        {
+            Elements.Fire => 2f,
+            Elements.Water => 0.5f,
+            Elements.Earth => 3f,
+            Elements.Air => 0.5f,
+            _ => 1f
+        };
+    }
+
+    // CORRECCIÓN 3: Sobrescribimos TakeDamage para activar el color justo después de recibir el golpe
     public override void TakeDamage(int damageAmount, Elements damageElement)
     {
-        float multiplier = 1f;
-        switch (damageElement)
+        // 1. Llamamos al método base para que haga todo el cálculo de daño
+        base.TakeDamage(damageAmount, damageElement);
+
+        // 2. Activamos el efecto visual
+        if (spriteRenderer != null && gameObject.activeInHierarchy)
         {
-            case Elements.Fire: multiplier = 2f; break;
-            case Elements.Water: multiplier = 0.5f; break;
-            case Elements.Earth: multiplier = 3f; break;
-            case Elements.Air: multiplier = 0.5f; break;
-            case Elements.None: default: multiplier = 1f; break;
+            StartCoroutine(FlashRedCoroutine());
         }
-
-        int finalDamage = Mathf.RoundToInt(damageAmount * multiplier);
-        if (damageAmount > 0 && finalDamage < 1) finalDamage = 1;
-
-        base.TakeDamage(finalDamage, damageElement); // Modifica vida mediante el método base
     }
 
     public void SetWeapon(WeaponData newWeapon)
     {
-
         this.weaponData = newWeapon;
-    }   
+    }
+
+    private IEnumerator FlashRedCoroutine()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(damageFlashDuration);
+        spriteRenderer.color = originalColor;
+    }
 }

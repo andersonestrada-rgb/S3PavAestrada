@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fantasma
   entityID: 3
-  entityName: Alien de metal
+  entityName: AlienMetal
   enetityDescription: Es muy duro
   element: 4
   stats:
