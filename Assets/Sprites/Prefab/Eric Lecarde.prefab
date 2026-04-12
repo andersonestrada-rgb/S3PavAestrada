@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3565371610373251006}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.54, y: -2.15, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 3.9133, y: 3.9133, z: 3.9133}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: -317484614682668442, guid: 27900b83985023948b097418ca870673, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.3, y: 0.36}
@@ -185,6 +185,7 @@ MonoBehaviour:
     speed: 2
     knockback: 2
     xp: 40
+  collisionAttackCooldown: 1
 --- !u!114 &7316083746545558589
 MonoBehaviour:
   m_ObjectHideFlags: 0
