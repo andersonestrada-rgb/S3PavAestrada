@@ -41,12 +41,12 @@ El sistema del jugador está dividido en dos partes principales:
 
 ## 📜 ¿Qué hay de los Scripts?
 
-Para hacer que todo esto funcione, se crearon un total de **11 scripts**. Aquí te comparto las implementaciones técnicas nuevas que más me gustaron:
+Para hacer que todo esto funcione, se crearon un total de **11 scripts**. En fin :D, aquí te comparto las implementaciones técnicas nuevas que más me gustaron:
 
-* 🗂️ **Organización en el Inspector:** Implementación del atributo `[Header("Titulo")]` para crear encabezados y ordenar de manera elegante nuestros valores en el Inspector de Unity.
+* 🗂️ **Organización en el Inspector:** Implementé el atributo `[Header("Titulo")]` para crear encabezados y ordenar de manera elegante nuestros valores en el Inspector de Unity.
 * 🟢 **Gizmos:** Uso del método `OnDrawGizmosSelected()` para dibujar y visualizar el radio de colisión del `Colector` directamente en la escena.
 * 🧮 **Cálculos Matemáticos:** Uso de métodos de la clase `Mathf` para definir límites, realizar redondeos y aplicar valores infinitos negativos para asegurar que nuestros métodos se activen correctamente con cualquier valor superior.
 * 🖥️ **Interfaz de Usuario (UI):** Uso de componentes `TextMeshProUGUI` para mostrar la vida, experiencia (XP) y el puntaje (Score) del Player en pantalla, recolectando estos datos de forma limpia desde el `BaseData` del Player.
 
-> ¡Hay más implementaciones bajo el capó, pero estas son las que más disfruté incluir en el proyecto! :D
+> ¡Hay más implementaciones que muy interesantas, pero estas son las que más disfruté investigar e incluir en el proyecto! :D
 
