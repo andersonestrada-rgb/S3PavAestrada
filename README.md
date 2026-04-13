@@ -5,7 +5,7 @@
 ## 🌿 Navegación por Ramas (Branches)
 
 ¿Deseas ver cuál fue mi progreso en cada semana? ¡Es muy fácil!
-- **Semana 3:** Cambia a la rama `DesarroS3`.
+- **Semana 3:** Cambia a la rama `DesarrolloS3`.
 - **Semana 4:** Mantente en la rama `AvancesS4` (esta es la rama por defecto).
 
 ---
