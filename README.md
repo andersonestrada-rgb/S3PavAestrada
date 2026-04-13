@@ -25,7 +25,7 @@ El sistema del jugador está dividido en dos partes principales:
 > *A continuación, un vistazo a las mecánicas en acción:*
 
 <div align="center">
-  <img src="UDemostraciónLeftControl.gif" width="400" alt="Demostración del Player">
+  <img src="DemostraciónLeftControl.gif" width="400" alt="Demostración del Player">
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="DemostraciónLeftShift.gif" width="400" alt="Demostración del Recolector">
 </div>
