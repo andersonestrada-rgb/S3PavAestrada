@@ -27,8 +27,8 @@ El sistema del jugador está dividido en dos partes principales:
 <div align="center">
   <table>
     <tr>
-      <td align="center"><b><code>Control Izquierdo</code></b></td>
       <td align="center"><b><code>Shift Izquierdo</code></b></td>
+      <td align="center"><b><code>Control Izquierdo</code></b></td>
     </tr>
     <tr>
       <td align="center"><img src="DemostraciónLeftControl.gif" width="400" alt="Demostración del Player"></td>
