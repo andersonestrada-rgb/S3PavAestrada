@@ -48,5 +48,5 @@ Para hacer que todo esto funcione, se crearon un total de **16 scripts**. En fin
 * 🧮 **Cálculos Matemáticos:** Uso de métodos de la clase `Mathf` para definir límites, realizar redondeos y aplicar valores infinitos negativos para asegurar que nuestros métodos se activen correctamente con cualquier valor superior.
 * 🖥️ **Interfaz de Usuario (UI):** Uso de componentes `TextMeshProUGUI` para mostrar la vida, experiencia (XP) y el puntaje (Score) del Player en pantalla, recolectando estos datos de forma limpia desde el `BaseData` del Player.
 
-> ¡Hay más implementaciones que muy interesantas, pero estas son las que más disfruté investigar e incluir en el proyecto! :D
+> ¡Hay más implementaciones que muy interesantes, pero estas son las que más disfruté investigar e incluir en el proyecto! :D
 
