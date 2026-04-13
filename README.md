@@ -41,7 +41,7 @@ El sistema del jugador está dividido en dos partes principales:
 
 ## 📜 ¿Qué hay de los Scripts?
 
-Para hacer que todo esto funcione, se crearon un total de **11 scripts**. En fin :D, aquí te comparto las implementaciones técnicas nuevas que más me gustaron:
+Para hacer que todo esto funcione, se crearon un total de **16 scripts**. En fin :D, aquí te comparto las implementaciones técnicas nuevas que más me gustaron:
 
 * 🗂️ **Organización en el Inspector:** Implementé el atributo `[Header("Titulo")]` para crear encabezados y ordenar de manera elegante nuestros valores en el Inspector de Unity.
 * 🟢 **Gizmos:** Uso del método `OnDrawGizmosSelected()` para dibujar y visualizar el radio de colisión del `Colector` directamente en la escena.
