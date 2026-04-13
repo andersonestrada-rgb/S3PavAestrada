@@ -24,12 +24,9 @@ El sistema del jugador está dividido en dos partes principales:
 ### 🎬 Demostración Visual
 > *A continuación, un vistazo a las mecánicas en acción:*
 
-**`Control Izquierdo`**
 <div align="center">
   <img src="UDemostraciónLeftControl.gif" width="400" alt="Demostración del Player">
   &nbsp;&nbsp;&nbsp;&nbsp;
-
-**`Shift Izquierdo`**
   <img src="DemostraciónLeftShift.gif" width="400" alt="Demostración del Recolector">
 </div>
 
