@@ -41,12 +41,13 @@ public class Player : BaseEntity
     [SerializeField] private float attackCooldown = 1f;
 
     [Header("Efectos Visuales")]
-    [SerializeField] private float damageFlashDuration;
+    [SerializeField] private float damageFlashDuration;   
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
-    [SerializeField] private SpriteRenderer spriteRenderer;
     private Vector2 moveInput;
     private bool facingRight = true;
+    private Vector3 frozenWorldPosition;
 
     // Progresión del jugador
     [Header("Progresión")]
@@ -94,6 +95,18 @@ public class Player : BaseEntity
                 spriteRenderer.flipX = false;
                 facingRight = true;
             }
+        }
+
+        // 1. En el instante exacto en que presionas Shift, guardamos su posición actual en el mundo
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            frozenWorldPosition = transform.position;
+        }
+
+        // 2. Mientras mantengas Shift presionado, lo forzamos a quedarse en esa coordenada      
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.position = frozenWorldPosition;
         }
     }
 
@@ -175,7 +188,6 @@ public class Player : BaseEntity
         };
     }
 
-    // CORRECCIÓN 3: Sobrescribimos TakeDamage para activar el color justo después de recibir el golpe
     public override void TakeDamage(int damageAmount, Elements damageElement)
     {
         // 1. Llamamos al método base para que haga todo el cálculo de daño
@@ -217,12 +229,9 @@ public class Player : BaseEntity
     private void LevelUp()
     {
         level++;
-        xpToNextLevel += xpIncreasePerLevel;
-
-        // Ejemplo: mejorar stats al subir de nivel
+        xpToNextLevel += xpIncreasePerLevel;       
         stats.SetPower(stats.Power + 1);
-        stats.SetHealth(stats.Health + 10);
-        // Podría añadirse curación completa o mejoras adicionales aquí
+        stats.SetHealth(stats.Health + 10);   
 
         Debug.Log($"¡Nivel {level}! Nuevas stats: Power={stats.Power}, Health={stats.Health}");
     }

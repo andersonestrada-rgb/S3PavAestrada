@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyFollow : MonoBehaviour
 {
     private BaseEntity myEntity; // Referencia a sus propias estadísticas
-    private Player player;       // Referencia al objetivo
+    private Colector colector;       // Referencia al objetivo
 
     [Header("Efectos Visuales")]
     private SpriteRenderer spriteRenderer; // Referencia para voltear el sprite
@@ -20,15 +20,15 @@ public class EnemyFollow : MonoBehaviour
 
     private void Start()
     {
-        player = FindAnyObjectByType<Player>();
+        colector = FindAnyObjectByType<Colector>();
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (colector == null) return;
 
         // 1. Calcula la dirección hacia el jugador
-        Vector2 direction = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
+        Vector2 direction = ((Vector2)colector.transform.position - (Vector2)transform.position).normalized;
 
         // 2. Mueve al enemigo
         transform.position += (Vector3)(direction * myEntity.Stats.Speed * Time.deltaTime);
