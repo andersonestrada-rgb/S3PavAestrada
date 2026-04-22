@@ -27,12 +27,20 @@ directamente: debe actualizarse únicamente mediante
 métodos.
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public enum PlayerController
+{
+    nome,
+    Player1,
+    Player2,
+}
 
 public class Player : BaseEntity
 {
@@ -69,6 +77,50 @@ public class Player : BaseEntity
             Debug.LogWarning("No se encontró un SpriteRenderer en el Player ni en sus hijos.");
         }
     }
+    private void OnEnable()
+    {
+        inputs.Enable();
+        inputs.Player.Move.performed += OnMovement;        
+        inputs.Player.Move.canceled += OnMovementCanceled;
+        inputs.Player.Move.started +=  OnAttack1;
+        inputs.Player.Move.started +=  OnAttack2;
+        inputs.Player.Move.performed +=  StopPlayer;
+        inputs.Player.Move.performed +=  StopCollector;
+
+        var PlayerInput = inputs.Player;
+        switch (playerController)
+        {
+            case PlayerController.nome:
+                break;
+            case PlayerController.Player1:
+                PlayerInput.inputs.Player1.Enable();
+                break;
+            case PlayerController.Player2:
+                PlayerInput.inputs.Player2.Enable();
+                break;
+        }
+
+    }
+
+    private void StopCollector(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void StopPlayer(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnAttack2(InputAction.CallbackContext context)
+    {
+        Debug.Log("A1");        
+    }
+
+    private void OnAttack1(InputAction.CallbackContext context)
+    {
+        Debug.Log("A2");
+    }
 
     void Start()
     {
@@ -76,11 +128,8 @@ public class Player : BaseEntity
     }
 
     void Update()
-    {
-        if (moveInput != Vector2.zero)
-        {
-            MovementMechanism(moveInput);
-        }
+    {     
+        MovementMechanism(moveInput);       
 
         const float flipThreshold = 0.01f;
         if (Mathf.Abs(moveInput.x) > flipThreshold && spriteRenderer != null)
@@ -110,22 +159,34 @@ public class Player : BaseEntity
         }
     }
 
-    private void OnEnable()
-    {
-        inputs.Enable();
-        inputs.Player.Move.performed += OnMovement;
-        inputs.Player.Move.canceled += OnMovement;
-    }
-
     private void OnMovement(InputAction.CallbackContext context)
     {
+        print("Wazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         moveInput = context.ReadValue<Vector2>();
+    }
+    private void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+        moveInput = Vector2.zero;
     }
 
     private void MovementMechanism(Vector2 input)
     {
+        if (input == Vector2.zero) return;
         transform.position += (Vector3)input * stats.Speed * Time.deltaTime;
     }
+
+    //public void OnMove()
+    //{
+    //    if (moveInput != Vector2.zero)
+    //    {
+    //        animator.SetBool("isRunning", true);
+    //        transform.position += (Vector3)moveInput * stats.Speed * Time.deltaTime;
+
+    //    }
+    //    else 
+    //        animator.SetBool("isRunning", false);
+    //}
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -135,25 +196,36 @@ public class Player : BaseEntity
             Enemys.Add(collision.gameObject);
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         Enemys.Remove(collision.gameObject);
     }
-
+    private IEnumerator FlashRedCoroutine()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(damageFlashDuration);
+        spriteRenderer.color = originalColor;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         float currentAttackRange = weaponData != null ? weaponData.Range : 2f;
         Gizmos.DrawWireSphere(transform.position, currentAttackRange);
     }
+    // ----- Sistema de experiencia / niveles -----
+    private void LevelUp()
+    {
+        level++;
+        xpToNextLevel += xpIncreasePerLevel;
+        stats.SetPower(stats.Power + 1);
+        stats.SetHealth(stats.Health + 10);
 
-    public int Damage => weaponData != null ? weaponData.Damage : 0;
-    public float AttackRange => weaponData != null ? weaponData.Range : 0f;
-    public int Ammo => weaponData != null ? weaponData.Ammo : 0;
+        Debug.Log($"¡Nivel {level}! Nuevas stats: Power={stats.Power}, Health={stats.Health}");
+    }
 
     public List<GameObject> Enemys = new();
     public InputSystem_Actions inputs;
+    public PlayerController playerController;
 
     public void Attack()
     {
@@ -205,12 +277,6 @@ public class Player : BaseEntity
         this.weaponData = newWeapon;
     }
 
-    private IEnumerator FlashRedCoroutine()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(damageFlashDuration);
-        spriteRenderer.color = originalColor;
-    }
 
     // ----- Sistema de experiencia / niveles -----
     public void AddExperience(int amount)
@@ -226,18 +292,13 @@ public class Player : BaseEntity
         }
     }
 
-    private void LevelUp()
-    {
-        level++;
-        xpToNextLevel += xpIncreasePerLevel;       
-        stats.SetPower(stats.Power + 1);
-        stats.SetHealth(stats.Health + 10);   
-
-        Debug.Log($"¡Nivel {level}! Nuevas stats: Power={stats.Power}, Health={stats.Health}");
-    }
-
     // Propiedades públicas usadas por UI
     public int Level => level;
     public int CurrentXP => currentXP;
     public int XPToNextLevel => xpToNextLevel;
+
+    //Getters
+    public int Damage => weaponData != null ? weaponData.Damage : 0;
+    public float AttackRange => weaponData != null ? weaponData.Range : 0f;
+    public int Ammo => weaponData != null ? weaponData.Ammo : 0;
 }

@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6936555746991680537, guid: 6779c4c5fbc3ed040baf274325447df5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -167,3 +167,5 @@ MonoBehaviour:
   collectableName: Pocion
   collectableDescription: Te cura
   value: 15
+  fadeDuration: 1.5
+  fadeInterval: 0.05
