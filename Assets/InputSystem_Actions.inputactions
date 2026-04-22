@@ -3,7 +3,7 @@
     "name": "InputSystem_Actions",
     "maps": [
         {
-            "name": "Player",
+            "name": "Player1",
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
@@ -303,7 +303,7 @@
             ]
         },
         {
-            "name": "Player1",
+            "name": "Player2",
             "id": "31f89073-e9c3-4337-a66a-843a81f40803",
             "actions": [
                 {

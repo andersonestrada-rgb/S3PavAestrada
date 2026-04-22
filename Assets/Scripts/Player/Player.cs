@@ -37,7 +37,7 @@ using UnityEngine.InputSystem;
 
 public enum PlayerController
 {
-    nome,
+    none,
     Player1,
     Player2,
 }
@@ -79,27 +79,32 @@ public class Player : BaseEntity
     }
     private void OnEnable()
     {
-        inputs.Enable();
-        inputs.Player.Move.performed += OnMovement;        
-        inputs.Player.Move.canceled += OnMovementCanceled;
-        inputs.Player.Move.started +=  OnAttack1;
-        inputs.Player.Move.started +=  OnAttack2;
-        inputs.Player.Move.performed +=  StopPlayer;
-        inputs.Player.Move.performed +=  StopCollector;
-
-        var PlayerInput = inputs.Player;
+        inputs.Enable();    
+        
         switch (playerController)
         {
-            case PlayerController.nome:
+            case PlayerController.none:
                 break;
             case PlayerController.Player1:
-                PlayerInput.inputs.Player1.Enable();
+                {
+                    inputs.Player1.Move.performed += OnMovement;
+                    inputs.Player1.Move.canceled += OnMovementCanceled;
+                    inputs.Player1.Attack.started += OnAttack1;
+                    inputs.Player1.Attack2.started += OnAttack2;
+                    inputs.Player1.Move.performed += StopPlayer;
+                    inputs.Player1.Move.performed += StopCollector;
+                }
                 break;
             case PlayerController.Player2:
-                PlayerInput.inputs.Player2.Enable();
+                {
+                    inputs.Player2.Move.performed += OnMovement;
+                    inputs.Player2.Move.canceled += OnMovementCanceled;
+                    inputs.Player2.Attack.started += OnAttack1;
+                    inputs.Player2.Attack2.started += OnAttack2;
+                }
                 break;
-        }
 
+        }
     }
 
     private void StopCollector(InputAction.CallbackContext context)

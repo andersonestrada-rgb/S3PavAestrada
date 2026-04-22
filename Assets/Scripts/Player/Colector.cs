@@ -81,8 +81,8 @@ public class Colector : MonoBehaviour
     private void OnEnable()
     {
         inputs.Enable();
-        inputs.Player.Move.performed += OnMovement;
-        inputs.Player.Move.canceled += OnMovement;
+        inputs.Player1.Move.performed += OnMovement;
+        inputs.Player1.Move.canceled += OnMovement;
     }
 
     private void OnMovement(InputAction.CallbackContext context)
