@@ -44,6 +44,13 @@ public enum PlayerController
 
 public class Player : BaseEntity
 {
+    #region Variables
+    #region References
+    public List<GameObject> Enemys = new();
+    public InputSystem_Actions inputs;
+    [SerializeField] private PlayerController playerController;
+    #endregion references
+
     [Header("Configuración de Ataque")]
     [SerializeField] private WeaponData weaponData;
     [SerializeField] private float attackCooldown = 1f;
@@ -63,6 +70,7 @@ public class Player : BaseEntity
     [SerializeField] private int currentXP = 0;
     [SerializeField] private int xpToNextLevel = 100;
     [SerializeField] private int xpIncreasePerLevel = 50;
+    #endregion
 
     private void Awake()
     {
@@ -86,7 +94,8 @@ public class Player : BaseEntity
             case PlayerController.none:
                 break;
             case PlayerController.Player1:
-                {
+                {   
+
                     inputs.Player1.Move.performed += OnMovement;
                     inputs.Player1.Move.canceled += OnMovementCanceled;
                     inputs.Player1.Attack.started += OnAttack1;
@@ -106,27 +115,6 @@ public class Player : BaseEntity
 
         }
     }
-
-    private void StopCollector(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void StopPlayer(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnAttack2(InputAction.CallbackContext context)
-    {
-        Debug.Log("A1");        
-    }
-
-    private void OnAttack1(InputAction.CallbackContext context)
-    {
-        Debug.Log("A2");
-    }
-
     void Start()
     {
         InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
@@ -163,6 +151,26 @@ public class Player : BaseEntity
             transform.position = frozenWorldPosition;
         }
     }
+    #region Eventos de Input
+    private void StopCollector(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void StopPlayer(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnAttack2(InputAction.CallbackContext context)
+    {
+        Debug.Log("A1");
+    }
+
+    private void OnAttack1(InputAction.CallbackContext context)
+    {
+        Debug.Log("A2");
+    }
 
     private void OnMovement(InputAction.CallbackContext context)
     {
@@ -179,6 +187,7 @@ public class Player : BaseEntity
         if (input == Vector2.zero) return;
         transform.position += (Vector3)input * stats.Speed * Time.deltaTime;
     }
+    #endregion
 
     //public void OnMove()
     //{
@@ -192,7 +201,7 @@ public class Player : BaseEntity
     //        animator.SetBool("isRunning", false);
     //}
 
-
+    #region Triggers
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var entity = collision.GetComponent<BaseEntity>();
@@ -205,18 +214,16 @@ public class Player : BaseEntity
     {
         Enemys.Remove(collision.gameObject);
     }
+    #endregion
+
+    #region Private Methods
     private IEnumerator FlashRedCoroutine()
     {
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(damageFlashDuration);
         spriteRenderer.color = originalColor;
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        float currentAttackRange = weaponData != null ? weaponData.Range : 2f;
-        Gizmos.DrawWireSphere(transform.position, currentAttackRange);
-    }
+ 
     // ----- Sistema de experiencia / niveles -----
     private void LevelUp()
     {
@@ -228,10 +235,21 @@ public class Player : BaseEntity
         Debug.Log($"¡Nivel {level}! Nuevas stats: Power={stats.Power}, Health={stats.Health}");
     }
 
-    public List<GameObject> Enemys = new();
-    public InputSystem_Actions inputs;
-    public PlayerController playerController;
+ 
+    protected override float GetElementalMultiplier(Elements damageElement)
+    {
+        return damageElement switch
+        {
+            Elements.Fire => 2f,
+            Elements.Water => 0.5f,
+            Elements.Earth => 3f,
+            Elements.Air => 0.5f,
+            _ => 1f
+        };
+    }
+    #endregion
 
+    #region Public Methods
     public void Attack()
     {
         GameObject[] enemies = Enemys.ToArray();
@@ -253,17 +271,7 @@ public class Player : BaseEntity
         }
     }
 
-    protected override float GetElementalMultiplier(Elements damageElement)
-    {
-        return damageElement switch
-        {
-            Elements.Fire => 2f,
-            Elements.Water => 0.5f,
-            Elements.Earth => 3f,
-            Elements.Air => 0.5f,
-            _ => 1f
-        };
-    }
+  
 
     public override void TakeDamage(int damageAmount, Elements damageElement)
     {
@@ -297,6 +305,17 @@ public class Player : BaseEntity
         }
     }
 
+    #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        float currentAttackRange = weaponData != null ? weaponData.Range : 2f;
+        Gizmos.DrawWireSphere(transform.position, currentAttackRange);
+    }
+
+    #region Getters
+
     // Propiedades públicas usadas por UI
     public int Level => level;
     public int CurrentXP => currentXP;
@@ -306,4 +325,5 @@ public class Player : BaseEntity
     public int Damage => weaponData != null ? weaponData.Damage : 0;
     public float AttackRange => weaponData != null ? weaponData.Range : 0f;
     public int Ammo => weaponData != null ? weaponData.Ammo : 0;
+    #endregion
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7036752494034112332}
   m_Layer: 0
   m_Name: Hacha
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,10 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e316a7b6f77344f9a0c64367cb7132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBase
-  Type: 2
   Duration: 10
-  Speed: 1
-  dass: {x: 0, y: 0}
+  Type: 2
+  speed: 0
+  RotationSpeed: 0
+  dir: {x: 0, y: 0}
 --- !u!61 &7036752494034112332
 BoxCollider2D:
   m_ObjectHideFlags: 0
