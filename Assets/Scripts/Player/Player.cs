@@ -225,6 +225,9 @@ public class Player : BaseEntity
 
         // (Opcional) Asignamos la dirección si es necesario
         newBullet.dir = firePoint.right;
+        // Disparamos el efecto visual del disparo
+                if (newBullet.effectorAction != null)
+
     }
 
     private void OnMovement(InputAction.CallbackContext context)

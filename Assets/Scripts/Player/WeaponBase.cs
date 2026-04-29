@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 public enum ProyectileType
 {
     None,
@@ -7,6 +8,7 @@ public enum ProyectileType
     Falling,
     Ghosting,
 }
+
 public class WeaponBase : MonoBehaviour
 {
     [Header("Configuración General")]
@@ -27,7 +29,7 @@ public class WeaponBase : MonoBehaviour
     public Vector2 dir;   
     private BaseEntity targetEnemy;
     private bool hasHit = false;
-
+    public UnityEvent effectorAction;
 
     void Start()
     {
