@@ -170,10 +170,14 @@ MonoBehaviour:
   attackCooldown: 2
   damageFlashDuration: 0.5
   spriteRenderer: {fileID: 0}
-  firePoint: {fileID: 0}
-  bulletPrefabs: []
+  firePoint: {fileID: 300683276}
+  bulletPrefabs:
+  - {fileID: 7144775878618496522, guid: 65d5edd2952e1d44b8c51138195dd2d4, type: 3}
+  - {fileID: 8998873350093640784, guid: 7d05051df64d15e4b94e6d5c5f280256, type: 3}
+  - {fileID: 3656413193839868444, guid: 83cde4e23f1b11544a8d1a970f22ce8a, type: 3}
+  - {fileID: 8801350007172238649, guid: b689f973e5d001b4d8111d552919ec04, type: 3}
   currentWeaponIndex: 0
-  orbitWeaponPrefab: {fileID: 0}
+  orbitWeaponPrefab: {fileID: 8283681690607043624, guid: ce82ce291e3765543aeb364c5014c05b, type: 3}
   level: 1
   currentXP: 0
   xpToNextLevel: 100
