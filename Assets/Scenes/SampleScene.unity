@@ -161,6 +161,8 @@ MonoBehaviour:
     speed: 5
     knockback: 2
     xp: 50
+  Enemys: []
+  playerController: 2
   weaponData:
     damage: 5
     range: 2
@@ -168,12 +170,14 @@ MonoBehaviour:
   attackCooldown: 2
   damageFlashDuration: 0.5
   spriteRenderer: {fileID: 0}
+  firePoint: {fileID: 0}
+  bulletPrefabs: []
+  currentWeaponIndex: 0
+  orbitWeaponPrefab: {fileID: 0}
   level: 1
   currentXP: 0
   xpToNextLevel: 100
   xpIncreasePerLevel: 50
-  Enemys: []
-  playerController: 2
 --- !u!212 &300683275
 SpriteRenderer:
   serializedVersion: 2
@@ -553284,7 +553288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &926544994
 Transform:
   m_ObjectHideFlags: 0
@@ -554088,6 +554092,8 @@ MonoBehaviour:
     speed: 5
     knockback: 1
     xp: 1
+  Enemys: []
+  playerController: 1
   weaponData:
     damage: 10
     range: 5
@@ -554095,12 +554101,18 @@ MonoBehaviour:
   attackCooldown: 1
   damageFlashDuration: 0.25
   spriteRenderer: {fileID: 2093483743}
+  firePoint: {fileID: 2093483744}
+  bulletPrefabs:
+  - {fileID: 7144775878618496522, guid: 65d5edd2952e1d44b8c51138195dd2d4, type: 3}
+  - {fileID: 8998873350093640784, guid: 7d05051df64d15e4b94e6d5c5f280256, type: 3}
+  - {fileID: 3656413193839868444, guid: 83cde4e23f1b11544a8d1a970f22ce8a, type: 3}
+  - {fileID: 8801350007172238649, guid: b689f973e5d001b4d8111d552919ec04, type: 3}
+  currentWeaponIndex: 0
+  orbitWeaponPrefab: {fileID: 8283681690607043624, guid: ce82ce291e3765543aeb364c5014c05b, type: 3}
   level: 1
   currentXP: 0
   xpToNextLevel: 100
   xpIncreasePerLevel: 50
-  Enemys: []
-  playerController: 1
 --- !u!212 &2093483743
 SpriteRenderer:
   serializedVersion: 2
@@ -554316,9 +554328,9 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1852367346}
   - {fileID: 2093483744}
+  - {fileID: 300683276}
   - {fileID: 1506421427}
   - {fileID: 347976052}
   - {fileID: 2066646037}
   - {fileID: 719249737}
   - {fileID: 2000496221}
-  - {fileID: 300683276}

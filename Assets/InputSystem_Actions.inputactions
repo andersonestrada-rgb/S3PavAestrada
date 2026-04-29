@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeType",
+                    "type": "Button",
+                    "id": "5dfea3e8-7799-4301-8483-1c49047cd722",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -299,6 +308,17 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "397bda39-a8a3-4239-b13c-4194f7c967a3",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeType",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -373,6 +393,15 @@
                     "name": "StopCollector",
                     "type": "Button",
                     "id": "6fcfcf9f-d1c6-41a9-8710-96494fa7f800",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeType",
+                    "type": "Button",
+                    "id": "1966ccc6-80bd-4c32-b2cd-fc667e46ac76",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -575,6 +604,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "StopCollector",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eebb96f-fa77-4b31-bdb7-7d2221c27a20",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeType",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

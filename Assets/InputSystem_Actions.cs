@@ -163,6 +163,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeType"",
+                    ""type"": ""Button"",
+                    ""id"": ""5dfea3e8-7799-4301-8483-1c49047cd722"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -385,6 +394,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""397bda39-a8a3-4239-b13c-4194f7c967a3"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeType"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -459,6 +479,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""StopCollector"",
                     ""type"": ""Button"",
                     ""id"": ""6fcfcf9f-d1c6-41a9-8710-96494fa7f800"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeType"",
+                    ""type"": ""Button"",
+                    ""id"": ""1966ccc6-80bd-4c32-b2cd-fc667e46ac76"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -661,6 +690,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""StopCollector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7eebb96f-fa77-4b31-bdb7-7d2221c27a20"",
+                    ""path"": ""<Keyboard>/numpad0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeType"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1278,6 +1318,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player1_Sprint = m_Player1.FindAction("Sprint", throwIfNotFound: true);
         m_Player1_StopPlayer = m_Player1.FindAction("StopPlayer", throwIfNotFound: true);
         m_Player1_StopCollector = m_Player1.FindAction("StopCollector", throwIfNotFound: true);
+        m_Player1_ChangeType = m_Player1.FindAction("ChangeType", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Move = m_Player2.FindAction("Move", throwIfNotFound: true);
@@ -1288,6 +1329,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player2_Sprint = m_Player2.FindAction("Sprint", throwIfNotFound: true);
         m_Player2_StopPlayer = m_Player2.FindAction("StopPlayer", throwIfNotFound: true);
         m_Player2_StopCollector = m_Player2.FindAction("StopCollector", throwIfNotFound: true);
+        m_Player2_ChangeType = m_Player2.FindAction("ChangeType", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1390,6 +1432,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_Sprint;
     private readonly InputAction m_Player1_StopPlayer;
     private readonly InputAction m_Player1_StopCollector;
+    private readonly InputAction m_Player1_ChangeType;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player1".
     /// </summary>
@@ -1433,6 +1476,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player1/StopCollector".
         /// </summary>
         public InputAction @StopCollector => m_Wrapper.m_Player1_StopCollector;
+        /// <summary>
+        /// Provides access to the underlying input action "Player1/ChangeType".
+        /// </summary>
+        public InputAction @ChangeType => m_Wrapper.m_Player1_ChangeType;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1483,6 +1530,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @StopCollector.started += instance.OnStopCollector;
             @StopCollector.performed += instance.OnStopCollector;
             @StopCollector.canceled += instance.OnStopCollector;
+            @ChangeType.started += instance.OnChangeType;
+            @ChangeType.performed += instance.OnChangeType;
+            @ChangeType.canceled += instance.OnChangeType;
         }
 
         /// <summary>
@@ -1518,6 +1568,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @StopCollector.started -= instance.OnStopCollector;
             @StopCollector.performed -= instance.OnStopCollector;
             @StopCollector.canceled -= instance.OnStopCollector;
+            @ChangeType.started -= instance.OnChangeType;
+            @ChangeType.performed -= instance.OnChangeType;
+            @ChangeType.canceled -= instance.OnChangeType;
         }
 
         /// <summary>
@@ -1563,6 +1616,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_Sprint;
     private readonly InputAction m_Player2_StopPlayer;
     private readonly InputAction m_Player2_StopCollector;
+    private readonly InputAction m_Player2_ChangeType;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player2".
     /// </summary>
@@ -1606,6 +1660,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player2/StopCollector".
         /// </summary>
         public InputAction @StopCollector => m_Wrapper.m_Player2_StopCollector;
+        /// <summary>
+        /// Provides access to the underlying input action "Player2/ChangeType".
+        /// </summary>
+        public InputAction @ChangeType => m_Wrapper.m_Player2_ChangeType;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1656,6 +1714,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @StopCollector.started += instance.OnStopCollector;
             @StopCollector.performed += instance.OnStopCollector;
             @StopCollector.canceled += instance.OnStopCollector;
+            @ChangeType.started += instance.OnChangeType;
+            @ChangeType.performed += instance.OnChangeType;
+            @ChangeType.canceled += instance.OnChangeType;
         }
 
         /// <summary>
@@ -1691,6 +1752,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @StopCollector.started -= instance.OnStopCollector;
             @StopCollector.performed -= instance.OnStopCollector;
             @StopCollector.canceled -= instance.OnStopCollector;
+            @ChangeType.started -= instance.OnChangeType;
+            @ChangeType.performed -= instance.OnChangeType;
+            @ChangeType.canceled -= instance.OnChangeType;
         }
 
         /// <summary>
@@ -2047,6 +2111,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnStopCollector(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChangeType" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChangeType(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player2" which allows adding and removing callbacks.
@@ -2111,6 +2182,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnStopCollector(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChangeType" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChangeType(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

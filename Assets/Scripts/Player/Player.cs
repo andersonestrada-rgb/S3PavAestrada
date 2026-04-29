@@ -30,6 +30,7 @@ métodos.
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using Unity.Cinemachine;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -53,12 +54,25 @@ public class Player : BaseEntity
 
     [Header("Configuración de Ataque")]
     [SerializeField] private WeaponData weaponData;
-    [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private float attackCooldown = 1f;   
 
     [Header("Efectos Visuales")]
     [SerializeField] private float damageFlashDuration;   
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Color originalColor;
+
+    [Header("Configuración de Disparo")]
+    public Transform firePoint;
+
+    [Tooltip("Arrastra aquí los 4 prefabs de tus balas en orden")]
+    public WeaponBase[] bulletPrefabs;
+
+    [Tooltip("0 = Spin, 1 = Throw, 2 = Falling, 3 = Ghosting")]
+    public int currentWeaponIndex = 0; // Cambia este valor cuando el jugador cambie de arma/sprite
+
+    [Header("Referencia de Arma Orbitante")]
+    public GameObject orbitWeaponPrefab;
+    private GameObject activeOrbitWeapon;
 
     private Vector2 moveInput;
     private bool facingRight = true;
@@ -100,6 +114,7 @@ public class Player : BaseEntity
                     inputs.Player1.Move.canceled += OnMovementCanceled;
                     inputs.Player1.Attack.started += OnAttack1;
                     inputs.Player1.Attack2.started += OnAttack2;
+                    inputs.Player1.ChangeType.started += TypeShoot;
                     inputs.Player1.Move.performed += StopPlayer;
                     inputs.Player1.Move.performed += StopCollector;
                 }
@@ -117,7 +132,7 @@ public class Player : BaseEntity
     }
     void Start()
     {
-        InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
+        //InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
     }
 
     void Update()
@@ -154,22 +169,58 @@ public class Player : BaseEntity
     #region Eventos de Input
     private void StopCollector(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        Debug.Log("Usame");
     }
 
     private void StopPlayer(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        Debug.Log("Usame tambien");
+    }
+
+    private void TypeShoot(InputAction.CallbackContext context)
+    {
+        // Cambiar al siguiente tipo de disparo
+        currentWeaponIndex = (currentWeaponIndex + 1) % bulletPrefabs.Length;
+
+        // Obtener el nombre del tipo de disparo
+        ProyectileType currentType = (ProyectileType)currentWeaponIndex;
+        Debug.Log($"Tipo de disparo cambiado a: {currentType} (Índice: {currentWeaponIndex})");
     }
 
     private void OnAttack2(InputAction.CallbackContext context)
     {
-        Debug.Log("A1");
+        if (context.started) // Al pulsar el botón
+        {
+            if (activeOrbitWeapon == null)
+            {
+                // Instanciar el arma
+                activeOrbitWeapon = Instantiate(orbitWeaponPrefab);
+
+                // Configurar la referencia del jugador en el script de la bala
+                OrbitWeapon script = activeOrbitWeapon.GetComponent<OrbitWeapon>();
+                script.player = this.transform;
+            }
+            else
+            {
+                // Si ya existe, podrías destruirla (toggle) o hacer otra cosa
+                Destroy(activeOrbitWeapon);
+            }
+        }
     }
 
     private void OnAttack1(InputAction.CallbackContext context)
     {
-        Debug.Log("A2");
+        // Verificamos que haya prefabs asignados
+        if (bulletPrefabs.Length == 0 || firePoint == null) return;
+
+        // Seleccionamos el prefab actual según el índice
+        WeaponBase selectedPrefab = bulletPrefabs[currentWeaponIndex];
+
+        // Instanciamos
+        WeaponBase newBullet = Instantiate(selectedPrefab, firePoint.position, firePoint.rotation);
+
+        // (Opcional) Asignamos la dirección si es necesario
+        newBullet.dir = firePoint.right;
     }
 
     private void OnMovement(InputAction.CallbackContext context)
@@ -187,19 +238,7 @@ public class Player : BaseEntity
         if (input == Vector2.zero) return;
         transform.position += (Vector3)input * stats.Speed * Time.deltaTime;
     }
-    #endregion
-
-    //public void OnMove()
-    //{
-    //    if (moveInput != Vector2.zero)
-    //    {
-    //        animator.SetBool("isRunning", true);
-    //        transform.position += (Vector3)moveInput * stats.Speed * Time.deltaTime;
-
-    //    }
-    //    else 
-    //        animator.SetBool("isRunning", false);
-    //}
+    #endregion   
 
     #region Triggers
     private void OnTriggerEnter2D(Collider2D collision)
@@ -250,28 +289,26 @@ public class Player : BaseEntity
     #endregion
 
     #region Public Methods
-    public void Attack()
-    {
-        GameObject[] enemies = Enemys.ToArray();
+    //public void Attack()
+    //{
+    //    GameObject[] enemies = Enemys.ToArray();
 
-        foreach (GameObject enemyObj in enemies)
-        {
-            if (enemyObj == null) continue;
+    //    foreach (GameObject enemyObj in enemies)
+    //    {
+    //        if (enemyObj == null) continue;
 
-            float distance = Vector3.Distance(enemyObj.transform.position, transform.position);
+    //        float distance = Vector3.Distance(enemyObj.transform.position, transform.position);
 
-            if (distance <= AttackRange)
-            {
-                var enemyEntity = enemyObj.GetComponent<BaseEntity>();
-                if (enemyEntity != null)
-                {
-                    enemyEntity.TakeDamage(this.Damage, this.Element);
-                }
-            }
-        }
-    }
-
-  
+    //        if (distance <= AttackRange)
+    //        {
+    //            var enemyEntity = enemyObj.GetComponent<BaseEntity>();
+    //            if (enemyEntity != null)
+    //            {
+    //                enemyEntity.TakeDamage(this.Damage, this.Element);
+    //            }
+    //        }
+    //    }
+    //} 
 
     public override void TakeDamage(int damageAmount, Elements damageElement)
     {
@@ -283,13 +320,7 @@ public class Player : BaseEntity
         {
             StartCoroutine(FlashRedCoroutine());
         }
-    }
-
-    public void SetWeapon(WeaponData newWeapon)
-    {
-        this.weaponData = newWeapon;
-    }
-
+    }   
 
     // ----- Sistema de experiencia / niveles -----
     public void AddExperience(int amount)
@@ -304,7 +335,6 @@ public class Player : BaseEntity
             LevelUp();
         }
     }
-
     #endregion
 
     private void OnDrawGizmosSelected()
@@ -312,7 +342,7 @@ public class Player : BaseEntity
         Gizmos.color = Color.red;
         float currentAttackRange = weaponData != null ? weaponData.Range : 2f;
         Gizmos.DrawWireSphere(transform.position, currentAttackRange);
-    }
+    }       
 
     #region Getters
 
