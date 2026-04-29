@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public enum PlayerController
@@ -77,6 +78,9 @@ public class Player : BaseEntity
     private Vector2 moveInput;
     private bool facingRight = true;
     private Vector3 frozenWorldPosition;
+
+    public UnityEvent shootEffect; 
+
 
     // Progresión del jugador
     [Header("Progresión")]

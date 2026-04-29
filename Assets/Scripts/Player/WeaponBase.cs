@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public enum ProyectileType
 {
     None,
@@ -8,7 +7,6 @@ public enum ProyectileType
     Falling,
     Ghosting,
 }
-
 public class WeaponBase : MonoBehaviour
 {
     [Header("Configuración General")]
@@ -21,7 +19,6 @@ public class WeaponBase : MonoBehaviour
     [Header("Configuración de Throw (Arco)")]
     Vector3 velocity;
     float gravity = -9.8f;
-
 
     [Header("Configuración de Ghosting")]
     [SerializeField] private float ghostingSearchRange = 15f;
