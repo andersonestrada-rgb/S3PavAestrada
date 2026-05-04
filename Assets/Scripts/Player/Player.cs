@@ -82,8 +82,8 @@ public class Player : BaseEntity
     private bool facingRight = true;
     private Vector3 frozenWorldPosition;
 
-    public UnityEvent shootEffect; 
-
+    public UnityEvent shootEffect;
+    public UnityEvent orbitSummonEffect; // <-- NUEVO EVENTO
 
     // Progresión del jugador
     [Header("Progresión")]
@@ -251,11 +251,12 @@ public class Player : BaseEntity
         // Instanciamos
         WeaponBase newBullet = Instantiate(selectedPrefab, firePoint.position, firePoint.rotation);
 
-        // (Opcional) Asignamos la dirección si es necesario
-        newBullet.dir = firePoint.right;
-        // Disparamos el efecto visual del disparo
-        if (newBullet.effectorAction != null)
-        { }
+        // Ajustamos la dirección usando tu variable facingRight
+        // (Si tu firePoint ya rota físicamente, puedes dejar firePoint.right)
+        newBullet.dir = facingRight ? Vector2.right : Vector2.left;
+
+        // --- DISPARAMOS EL EFECTO DE PARTÍCULAS DEL JUGADOR ---
+        shootEffect?.Invoke();
     }
 
 
@@ -303,12 +304,14 @@ public class Player : BaseEntity
         {
             activeOrbitWeapon = Instantiate(orbitWeaponPrefab);
 
-            // Configurar la referencia del jugador en el script de la bala
             OrbitWeapon script = activeOrbitWeapon.GetComponent<OrbitWeapon>();
             if (script != null)
             {
                 script.player = this.transform;
             }
+
+            // --- DISPARAMOS EL EFECTO DEL CANGREJO ---
+            orbitSummonEffect?.Invoke();
 
             Debug.Log("Arma Orbital: Activada");
         }

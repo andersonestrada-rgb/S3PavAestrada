@@ -14,6 +14,7 @@ public class WeaponBase : MonoBehaviour
     [Header("Configuración General")]
     public int Duration;
     public ProyectileType Type;
+    public Estados estadoAlImpactar; // <-- NUEVA VARIABLE AÑADIDA
     public float speed;
     public float RotationSpeed;
     public int damage;
@@ -148,6 +149,12 @@ public class WeaponBase : MonoBehaviour
             // 1. Aplicar daño al enemigo
             enemy.TakeDamage(damage, Elements.None);
 
+            // 2. APLICAR EL ESTADO (NUEVA LÓGICA)
+            if (estadoAlImpactar != Estados.None)
+            {
+                enemy.ApplyState(estadoAlImpactar);
+                // Nota: Asumo que crearás un método ApplyState en BaseEntity
+            }
             // 2. Verificamos qué tipo de bala es para decidir si rebota o se destruye
             if (Type == ProyectileType.Spin)
             {

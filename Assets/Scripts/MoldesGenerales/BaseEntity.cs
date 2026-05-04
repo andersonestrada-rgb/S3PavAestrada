@@ -1,27 +1,10 @@
-/*
-1️ Modelado base del sistema:
-Crear una clase abstracta Entity 
-que sirva como base para Player y 
-los 4 tipos de enemigos.
-Cada entidad debe contener una 
-instancia de la clase pura BaseStats, 
-inicializada mediante constructor 
-parametrizado.
-La clase Entity debe definir la 
-estructura común del sistema y 
-obligar a que cada clase hija implemente 
-su propio método TakeDamage().
-*/
-
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Elements
 {
-    None,//0
-    Fire,//1
-    Water,//2
-    Earth,//3
-    Air //4
+    None, Fire, Water, Earth, Air
 }
 
 public class BaseEntity : MonoBehaviour
@@ -31,75 +14,113 @@ public class BaseEntity : MonoBehaviour
     [SerializeField] protected string entityName;
     [SerializeField] protected string enetityDescription;
     [SerializeField] protected Elements element;
-    [SerializeField] protected BaseStats stats;    
+    [SerializeField] protected BaseStats stats;
 
-    private void OnDestroy()
-    {
-        Debug.Log($"{entityName} ha sido destruido");
-    }   
+    [Header("Efectos Visuales de Estados")]
+    [SerializeField] protected SpriteRenderer entitySpriteRenderer;
+    public UnityEvent onStateApplied; // Arrastra tus partículas aquí desde el Inspector
 
-    // Añade este método para que los hijos lo sobreescriban
-    protected virtual float GetElementalMultiplier(Elements damageElement)
+    private Color originalColor;
+    private Coroutine visualCoroutine;
+
+    // Multiplicador de velocidad (para Freeze y Slow)
+    public float currentSpeedMultiplier { get; private set; } = 1f;
+
+    protected virtual void Start()
     {
-        return 1f; // Por defecto el daño es normal
+        if (entitySpriteRenderer == null) entitySpriteRenderer = GetComponent<SpriteRenderer>();
+        if (entitySpriteRenderer != null) originalColor = entitySpriteRenderer.color;
     }
 
-    // Modifica el TakeDamage base para que haga todo el trabajo
+    private void OnDestroy() { Debug.Log($"{entityName} ha sido destruido"); }
+
+    protected virtual float GetElementalMultiplier(Elements damageElement) { return 1f; }
+
     public virtual void TakeDamage(int damageAmount, Elements damageElement)
     {
-        // 1. Obtiene el multiplicador del hijo correspondiente
         float multiplier = GetElementalMultiplier(damageElement);
-
-        // 2. Calcula el daño final
         int finalDamage = Mathf.RoundToInt(damageAmount * multiplier);
         if (damageAmount > 0 && finalDamage < 1) finalDamage = 1;
 
-        Debug.Log($"{entityName} ha sufrido {finalDamage} punto(s) de daño ({damageElement})");
-
-        // 3. Aplica el daño a los stats
         stats.TakeDamage(finalDamage);
 
-        // 4. Lógica de muerte
         if (stats.Health <= 0)
         {
-            print($"{entityName} ha sido derrotado");
             if (Score.Instance != null) Score.Instance.AddScore(stats.XP);
             if (Spawner.Instance != null && !(this is Player)) Spawner.Instance.DropXPOrb(transform.position);
 
-            // Dar XP al Player directamente cuando un enemigo muere
             if (!(this is Player))
             {
                 GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-                if (playerObj != null)
+                if (playerObj != null && playerObj.TryGetComponent(out Player player))
                 {
-                    var player = playerObj.GetComponent<Player>();
-                    if (player != null)
-                    {
-                        player.AddExperience(stats.XP);
-                    }
+                    player.AddExperience(stats.XP);
                 }
             }
-            Destroy(gameObject);                                 
+            Destroy(gameObject);
         }
     }
 
-    // Método para restaurar vida (usado por pociones y otros efectos curativos)
     public virtual void HealHealth(int healAmount)
     {
         if (healAmount <= 0) return;
-
-        int oldHealth = stats.Health;
         stats.HealHealth(healAmount);
-        int newHealth = stats.Health;
-
-        Debug.Log($"{entityName} fue curado: {oldHealth} -> {newHealth}");
     }
 
+    // ==========================================
+    // NUEVA LÓGICA DE ESTADOS (HITOS 7 y 8)
+    // ==========================================
+
+    public void ApplyState(Estados estado)
+    {
+        // Factory pattern simple: Crea la habilidad correcta según el enum
+        BaseAbility ability = estado switch
+        {
+            Estados.Burn => new BurnAbility(),
+            Estados.Freeze => new FreezeAbility(),
+            Estados.Poison => new PoisonAbility(),
+            Estados.Shock => new ShockAbility(),
+            Estados.Slow => new SlowAbility(),
+            _ => null
+        };
+
+        // Ejecuta la habilidad pasándole este enemigo como objetivo
+        ability?.Execute(this);
+    }
+
+    // Método que las habilidades llamarán para cambiar el color y disparar las partículas
+    public void ApplyVisualEffect(Color tintColor, float duration)
+    {
+        onStateApplied?.Invoke(); // Dispara las partículas
+
+        if (visualCoroutine != null) StopCoroutine(visualCoroutine);
+        visualCoroutine = StartCoroutine(VisualRoutine(tintColor, duration));
+    }
+
+    private IEnumerator VisualRoutine(Color tint, float duration)
+    {
+        if (entitySpriteRenderer != null) entitySpriteRenderer.color = tint;
+        yield return new WaitForSeconds(duration);
+        if (entitySpriteRenderer != null) entitySpriteRenderer.color = originalColor;
+    }
+
+    // Método que las habilidades usarán para alterar la velocidad (Freeze/Slow)
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        currentSpeedMultiplier = multiplier;
+    }
+
+    // ==========================================
+    // PROPERTIES
+    // ==========================================
     public BaseStats Stats => stats;
     public Elements Element => element;
     public int Health => stats.Health;
     public int Power => stats.Power;
-    public int Speed => stats.Speed;
+
+    // IMPORTANTE: Los enemigos ahora deben usar esta propiedad para moverse
+    public float ActualSpeed => stats.Speed * currentSpeedMultiplier;
+    
     public int Knockback => stats.Knockback;
-    public int XP => stats.XP; 
+    public int XP => stats.XP;
 }

@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: RotationSpeed
       value: 360
       objectReference: {fileID: 0}
+    - target: {fileID: 7144775878618496522, guid: 65d5edd2952e1d44b8c51138195dd2d4, type: 3}
+      propertyPath: estadoAlImpactar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9149262811699081424, guid: 65d5edd2952e1d44b8c51138195dd2d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

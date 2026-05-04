@@ -30,8 +30,9 @@ public class EnemyFollow : MonoBehaviour
         // 1. Calcula la dirección hacia el jugador
         Vector2 direction = ((Vector2)colector.transform.position - (Vector2)transform.position).normalized;
 
-        // 2. Mueve al enemigo
-        transform.position += (Vector3)(direction * myEntity.Stats.Speed * Time.deltaTime);
+        // 2. Mueve al enemigo (AQUÍ ES EL CAMBIO CLAVE)
+        // Usamos myEntity.ActualSpeed para que respete el multiplicador de los estados
+        transform.position += (Vector3)(direction * myEntity.ActualSpeed * Time.deltaTime);
 
         // 3. Voltea el sprite (Para sprites que miran a la izquierda originalmente)
         if (spriteRenderer != null)
