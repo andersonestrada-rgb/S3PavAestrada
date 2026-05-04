@@ -172,6 +172,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Habilidades"",
+                    ""type"": ""Button"",
+                    ""id"": ""cece69f4-c61b-4a9c-bbab-1a6e35dedd0f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -405,6 +414,61 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeType"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c75b6a7f-506b-4423-9960-f50797f54446"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a04d154-95e9-496c-b3fb-24a3fe88a98b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7fe29a1f-f6f6-4490-913a-0e51e600b465"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf316caf-5286-4d12-852c-9fdbad1d0466"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bb5cf20-4bbc-4509-bb18-719d5a1c7f4f"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -488,6 +552,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""ChangeType"",
                     ""type"": ""Button"",
                     ""id"": ""1966ccc6-80bd-4c32-b2cd-fc667e46ac76"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Habilidades"",
+                    ""type"": ""Button"",
+                    ""id"": ""35305c2c-ffd1-4297-a3d6-490ee3c665ab"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -701,6 +774,61 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeType"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67cb7e38-d85f-4344-a16c-e737349e48a5"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06956913-a997-4a8b-92fc-e88eb55ad97d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97dc2f34-2d8e-4dee-b791-babd7150983e"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79f44447-37f2-4d98-9bae-44e6a6302105"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89214bad-7109-4858-b65d-b301ca420665"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilidades"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1319,6 +1447,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player1_StopPlayer = m_Player1.FindAction("StopPlayer", throwIfNotFound: true);
         m_Player1_StopCollector = m_Player1.FindAction("StopCollector", throwIfNotFound: true);
         m_Player1_ChangeType = m_Player1.FindAction("ChangeType", throwIfNotFound: true);
+        m_Player1_Habilidades = m_Player1.FindAction("Habilidades", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Move = m_Player2.FindAction("Move", throwIfNotFound: true);
@@ -1330,6 +1459,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player2_StopPlayer = m_Player2.FindAction("StopPlayer", throwIfNotFound: true);
         m_Player2_StopCollector = m_Player2.FindAction("StopCollector", throwIfNotFound: true);
         m_Player2_ChangeType = m_Player2.FindAction("ChangeType", throwIfNotFound: true);
+        m_Player2_Habilidades = m_Player2.FindAction("Habilidades", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1433,6 +1563,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_StopPlayer;
     private readonly InputAction m_Player1_StopCollector;
     private readonly InputAction m_Player1_ChangeType;
+    private readonly InputAction m_Player1_Habilidades;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player1".
     /// </summary>
@@ -1480,6 +1611,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player1/ChangeType".
         /// </summary>
         public InputAction @ChangeType => m_Wrapper.m_Player1_ChangeType;
+        /// <summary>
+        /// Provides access to the underlying input action "Player1/Habilidades".
+        /// </summary>
+        public InputAction @Habilidades => m_Wrapper.m_Player1_Habilidades;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1533,6 +1668,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeType.started += instance.OnChangeType;
             @ChangeType.performed += instance.OnChangeType;
             @ChangeType.canceled += instance.OnChangeType;
+            @Habilidades.started += instance.OnHabilidades;
+            @Habilidades.performed += instance.OnHabilidades;
+            @Habilidades.canceled += instance.OnHabilidades;
         }
 
         /// <summary>
@@ -1571,6 +1709,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeType.started -= instance.OnChangeType;
             @ChangeType.performed -= instance.OnChangeType;
             @ChangeType.canceled -= instance.OnChangeType;
+            @Habilidades.started -= instance.OnHabilidades;
+            @Habilidades.performed -= instance.OnHabilidades;
+            @Habilidades.canceled -= instance.OnHabilidades;
         }
 
         /// <summary>
@@ -1617,6 +1758,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_StopPlayer;
     private readonly InputAction m_Player2_StopCollector;
     private readonly InputAction m_Player2_ChangeType;
+    private readonly InputAction m_Player2_Habilidades;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player2".
     /// </summary>
@@ -1664,6 +1806,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player2/ChangeType".
         /// </summary>
         public InputAction @ChangeType => m_Wrapper.m_Player2_ChangeType;
+        /// <summary>
+        /// Provides access to the underlying input action "Player2/Habilidades".
+        /// </summary>
+        public InputAction @Habilidades => m_Wrapper.m_Player2_Habilidades;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1717,6 +1863,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeType.started += instance.OnChangeType;
             @ChangeType.performed += instance.OnChangeType;
             @ChangeType.canceled += instance.OnChangeType;
+            @Habilidades.started += instance.OnHabilidades;
+            @Habilidades.performed += instance.OnHabilidades;
+            @Habilidades.canceled += instance.OnHabilidades;
         }
 
         /// <summary>
@@ -1755,6 +1904,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeType.started -= instance.OnChangeType;
             @ChangeType.performed -= instance.OnChangeType;
             @ChangeType.canceled -= instance.OnChangeType;
+            @Habilidades.started -= instance.OnHabilidades;
+            @Habilidades.performed -= instance.OnHabilidades;
+            @Habilidades.canceled -= instance.OnHabilidades;
         }
 
         /// <summary>
@@ -2118,6 +2270,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnChangeType(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Habilidades" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHabilidades(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player2" which allows adding and removing callbacks.
@@ -2189,6 +2348,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnChangeType(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Habilidades" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHabilidades(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -68,6 +68,9 @@ public class Player : BaseEntity
     [Tooltip("Arrastra aquí los 4 prefabs de tus balas en orden")]
     public WeaponBase[] bulletPrefabs;
 
+    // Variable para guardar el estado actual del arma elegida
+    private ProyectileType currentShotType; // Por defecto
+
     [Tooltip("0 = Spin, 1 = Throw, 2 = Falling, 3 = Ghosting")]
     public int currentWeaponIndex = 0; // Cambia este valor cuando el jugador cambie de arma/sprite
 
@@ -117,8 +120,11 @@ public class Player : BaseEntity
                     inputs.Player1.Move.performed += OnMovement;
                     inputs.Player1.Move.canceled += OnMovementCanceled;
                     inputs.Player1.Attack.started += OnAttack1;
-                    inputs.Player1.Attack2.started += OnAttack2;
-                    inputs.Player1.ChangeType.started += TypeShoot;
+                    //inputs.Player1.Attack2.started += OnAttack2;
+                    inputs.Player1.Habilidades.started += SelectShot;
+
+                    //inputs.Player1.ChangeType.started += TypeShoot;
+
                     inputs.Player1.Move.performed += StopPlayer;
                     inputs.Player1.Move.performed += StopCollector;
                 }
@@ -134,9 +140,10 @@ public class Player : BaseEntity
 
         }
     }
+
+
     void Start()
-    {
-        //InvokeRepeating(nameof(Attack), 0.5f, attackCooldown);
+    {        
     }
 
     void Update()
@@ -181,14 +188,35 @@ public class Player : BaseEntity
         Debug.Log("Usame tambien");
     }
 
-    private void TypeShoot(InputAction.CallbackContext context)
+    #region Shooting
+    private void SelectShot(InputAction.CallbackContext context)
     {
-        // Cambiar al siguiente tipo de disparo
-        currentWeaponIndex = (currentWeaponIndex + 1) % bulletPrefabs.Length;
+        // Leemos qué número se presionó
+        string keyPressed = context.control.name;
 
-        // Obtener el nombre del tipo de disparo
-        ProyectileType currentType = (ProyectileType)currentWeaponIndex;
-        Debug.Log($"Tipo de disparo cambiado a: {currentType} (Índice: {currentWeaponIndex})");
+        switch (keyPressed)
+        {
+            case "1":
+                currentWeaponIndex = 0;
+                Debug.Log("Arma cambiada a: Spin");
+                break;
+            case "2":
+                currentWeaponIndex = 1;
+                Debug.Log("Arma cambiada a: Throw");
+                break;
+            case "3":
+                currentWeaponIndex = 2;
+                Debug.Log("Arma cambiada a: Falling");
+                break;
+            case "4":
+                currentWeaponIndex = 3;
+                Debug.Log("Arma cambiada a: Ghosting");
+                break;
+            case "5":
+                ToggleOrbitWeapon();
+                Debug.Log("Arma cambiada a: Cangrejo volador");
+                break;
+        }
     }
 
     private void OnAttack2(InputAction.CallbackContext context)
@@ -226,9 +254,14 @@ public class Player : BaseEntity
         // (Opcional) Asignamos la dirección si es necesario
         newBullet.dir = firePoint.right;
         // Disparamos el efecto visual del disparo
-                if (newBullet.effectorAction != null)
-
+        if (newBullet.effectorAction != null)
+        { }
     }
+
+
+    #endregion
+
+
 
     private void OnMovement(InputAction.CallbackContext context)
     {
@@ -263,6 +296,30 @@ public class Player : BaseEntity
     #endregion
 
     #region Private Methods
+    private void ToggleOrbitWeapon()
+    {
+        // Si el arma no existe, la creamos
+        if (activeOrbitWeapon == null)
+        {
+            activeOrbitWeapon = Instantiate(orbitWeaponPrefab);
+
+            // Configurar la referencia del jugador en el script de la bala
+            OrbitWeapon script = activeOrbitWeapon.GetComponent<OrbitWeapon>();
+            if (script != null)
+            {
+                script.player = this.transform;
+            }
+
+            Debug.Log("Arma Orbital: Activada");
+        }
+        // Si ya existe, la destruimos
+        else
+        {
+            Destroy(activeOrbitWeapon);
+            Debug.Log("Arma Orbital: Desactivada");
+        }
+    }
+
     private IEnumerator FlashRedCoroutine()
     {
         spriteRenderer.color = Color.red;
