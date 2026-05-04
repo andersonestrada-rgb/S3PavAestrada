@@ -1,6 +1,6 @@
-# 🎮 ¡Actividades de las Semanas 3, 4, 5 y 6!
+# 🎮 ¡Actividades de las Semanas 3 a la 7!
 
-¡Hola! 👋 En este repositorio podrás encontrar el trabajo que realicé para las actividades de las semanas 3 a la 6.
+¡Hola! 👋 En este repositorio podrás encontrar el trabajo que realicé para las actividades de las semanas 3 a la 7.
 
 ## 🌿 Navegación por Ramas (Branches)
 
@@ -8,7 +8,8 @@
 - **Semana 3:** Cambia a la rama `DesarrolloS3`.
 - **Semana 4:** Cambia a la rama `AvancesS4`.
 - **Semana 5:** Cambia a la rama `DesarrolloS5`.
-- **Semana 6:** Mantente en la rama `DesarrolloS6` (esta es la rama por defecto).
+- **Semana 6:** Cambia a la rama `DesarrolloS6`.
+- **Semana 7:** Mantente en la rama `DesarrolloS7` (esta es la rama por defecto).
 ---
 
 ## ✨ Características Destacadas
