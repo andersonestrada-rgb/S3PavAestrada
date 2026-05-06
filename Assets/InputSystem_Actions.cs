@@ -181,6 +181,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e66e490-6c28-487b-8372-462feb817cd6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -467,6 +476,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Habilidades"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73acbccb-95b7-4249-8270-0d7c7fb9329a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1448,6 +1468,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player1_StopCollector = m_Player1.FindAction("StopCollector", throwIfNotFound: true);
         m_Player1_ChangeType = m_Player1.FindAction("ChangeType", throwIfNotFound: true);
         m_Player1_Habilidades = m_Player1.FindAction("Habilidades", throwIfNotFound: true);
+        m_Player1_jump = m_Player1.FindAction("jump", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Move = m_Player2.FindAction("Move", throwIfNotFound: true);
@@ -1564,6 +1585,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_StopCollector;
     private readonly InputAction m_Player1_ChangeType;
     private readonly InputAction m_Player1_Habilidades;
+    private readonly InputAction m_Player1_jump;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player1".
     /// </summary>
@@ -1615,6 +1637,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player1/Habilidades".
         /// </summary>
         public InputAction @Habilidades => m_Wrapper.m_Player1_Habilidades;
+        /// <summary>
+        /// Provides access to the underlying input action "Player1/jump".
+        /// </summary>
+        public InputAction @jump => m_Wrapper.m_Player1_jump;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1671,6 +1697,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Habilidades.started += instance.OnHabilidades;
             @Habilidades.performed += instance.OnHabilidades;
             @Habilidades.canceled += instance.OnHabilidades;
+            @jump.started += instance.OnJump;
+            @jump.performed += instance.OnJump;
+            @jump.canceled += instance.OnJump;
         }
 
         /// <summary>
@@ -1712,6 +1741,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Habilidades.started -= instance.OnHabilidades;
             @Habilidades.performed -= instance.OnHabilidades;
             @Habilidades.canceled -= instance.OnHabilidades;
+            @jump.started -= instance.OnJump;
+            @jump.performed -= instance.OnJump;
+            @jump.canceled -= instance.OnJump;
         }
 
         /// <summary>
@@ -2277,6 +2309,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHabilidades(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJump(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player2" which allows adding and removing callbacks.

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class Collectable : MonoBehaviour
+public abstract class Collectable : MonoBehaviour , ICollectable
 {
     [SerializeField] protected string collectableName;
     [SerializeField] protected string collectableDescription;
@@ -102,4 +102,15 @@ public abstract class Collectable : MonoBehaviour
 
     public string CollectableName => collectableName;
     public float Value => value;
+
+
+    public void Collect()
+    {
+        //-> sumar puntos
+        //->poner un sonido
+        //->ser destruida
+        print("has coleccionado una moneda de valor :" + value);
+        Destroy(gameObject);
+    }
+
 }
