@@ -1,4 +1,4 @@
-# 🎮 ¡Actividades de las Semanas 3 a la 7!
+# 🎮 ¡Actividades de las Semanas 3 a la 8!
 
 ¡Hola! 👋 En este repositorio podrás encontrar el trabajo que realicé para las actividades de las semanas 3 a la 7.
 
@@ -9,11 +9,19 @@
 - **Semana 4:** Cambia a la rama `AvancesS4`.
 - **Semana 5:** Cambia a la rama `DesarrolloS5`.
 - **Semana 6:** Cambia a la rama `DesarrolloS6`.
-- **Semana 7:** Mantente en la rama `DesarrolloS7` (esta es la rama por defecto).
+- **Semana 7:** Cambia a la rama `DesarrolloS7`.
+- **Semana 8:** Mantente en la rama `DesarrolloS8` (esta es la rama por defecto).
 ---
 
 ## ✨ Características Destacadas
 
+### 🕹️ Efectos y partículas
+El sistema del juego ahora cuenta con particulas y efectos impresionates:
+1. Al disparar se crea un efecto con partículas.
+2. Cuando el enemigo recibe daño crea un efecto de partículas.
+3. Cuando algún enemiho, player u objeto recibe daño este cambia de color por medio del Fade y este depende del tipo de efecto para un color específico.
+4. Cuando le disparas al barril este puede llegar a explotar cuando llegué a destruirse.💥💥💥 ¡Ten mucho cuidado!💣
+   
 ### 🕹️ Control del Player
 El sistema del jugador está dividido en dos partes principales:
 1. Los controles de movimiento del personaje.
