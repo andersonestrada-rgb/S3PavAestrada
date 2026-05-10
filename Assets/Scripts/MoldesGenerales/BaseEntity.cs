@@ -7,7 +7,7 @@ public enum Elements
     None, Fire, Water, Earth, Air
 }
 
-public class BaseEntity : MonoBehaviour
+public class BaseEntity : MonoBehaviour, IDamageable
 {
     [Header("Configuración de la Entidad")]
     [SerializeField] protected int entityID;
@@ -27,9 +27,13 @@ public class BaseEntity : MonoBehaviour
     public float currentSpeedMultiplier { get; private set; } = 1f;
 
     protected virtual void Start()
-    {
-        if (entitySpriteRenderer == null) entitySpriteRenderer = GetComponent<SpriteRenderer>();
-        if (entitySpriteRenderer != null) originalColor = entitySpriteRenderer.color;
+    {      
+        // Las clases derivadas son responsables de asignar entitySpriteRenderer en el Inspector
+
+        if (entitySpriteRenderer != null)
+        {
+            originalColor = entitySpriteRenderer.color;
+        }
     }
 
     private void OnDestroy() { Debug.Log($"{entityName} ha sido destruido"); }
@@ -59,6 +63,11 @@ public class BaseEntity : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+ 
+    public virtual void TakeDamage(int amount)
+    {
+        TakeDamage(amount, Elements.None);
     }
 
     public virtual void HealHealth(int healAmount)

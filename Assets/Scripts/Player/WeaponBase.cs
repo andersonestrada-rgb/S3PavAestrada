@@ -143,23 +143,34 @@ public class WeaponBase : MonoBehaviour
         // Si ES Spin, permitimos que siga procesando colisiones para rebotar varias veces.
         if (hasHit && Type != ProyectileType.Spin) return;
 
-        var enemy = collision.GetComponent<BaseEntity>();
-        if (enemy != null && !(enemy is Player))
+        // Primero intentamos obtener un IDamageable (compatibilidad genérica con cualquier objeto dañable)
+        if (collision.TryGetComponent<IDamageable>(out var damageable))
         {
-            // 1. Aplicar daño al enemigo
-            enemy.TakeDamage(damage, Elements.None);
+            // Verificar que no sea el Player
+            if (collision.TryGetComponent<Player>(out _))
+                return;
 
-            // 2. APLICAR EL ESTADO (NUEVA LÓGICA)
-            if (estadoAlImpactar != Estados.None)
+            // Aplicar daño usando la interfaz
+            damageable.TakeDamage(damage);
+
+            // Si es una BaseEntity, aplicar el estado también
+            if (collision.TryGetComponent<BaseEntity>(out var entity))
             {
-                enemy.ApplyState(estadoAlImpactar);
-                // Nota: Asumo que crearás un método ApplyState en BaseEntity
+                // Aplicar daño con elemento (para cálculos de multiplicador elemental)
+                entity.TakeDamage(damage, Elements.None);
+
+                // Aplicar estado si existe
+                if (estadoAlImpactar != Estados.None)
+                {
+                    entity.ApplyState(estadoAlImpactar);
+                }
             }
-            // 2. Verificamos qué tipo de bala es para decidir si rebota o se destruye
+
+            // Comportamiento según tipo de proyectil
             if (Type == ProyectileType.Spin)
             {
-                // REBOTE: Dirección desde el centro del enemigo hacia el proyectil
-                Vector2 normal = (transform.position - enemy.transform.position).normalized;
+                // REBOTE: Dirección desde el centro del objeto hacia el proyectil
+                Vector2 normal = (transform.position - collision.transform.position).normalized;
 
                 // Aplicamos la reflexión a la dirección actual
                 dir = Vector2.Reflect(dir, normal).normalized;

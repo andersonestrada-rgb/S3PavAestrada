@@ -97,13 +97,22 @@ public class Player : BaseEntity
     {
         inputs = new();
 
+        // Obtener el SpriteRenderer y asignarlo
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
         if (spriteRenderer != null)
         {
+            // Sincronizar con BaseEntity
+            entitySpriteRenderer = spriteRenderer;
             originalColor = spriteRenderer.color;
+            Debug.Log($"✓ Player SpriteRenderer configurado. Sprite actual: {spriteRenderer.sprite.name}");
         }
         else
         {
-            Debug.LogWarning("No se encontró un SpriteRenderer en el Player ni en sus hijos.");
+            Debug.LogError("❌ No se encontró SpriteRenderer en el Player");
         }
     }
     private void OnEnable()
@@ -252,7 +261,6 @@ public class Player : BaseEntity
         WeaponBase newBullet = Instantiate(selectedPrefab, firePoint.position, firePoint.rotation);
 
         // Ajustamos la dirección usando tu variable facingRight
-        // (Si tu firePoint ya rota físicamente, puedes dejar firePoint.right)
         newBullet.dir = facingRight ? Vector2.right : Vector2.left;
 
         // --- DISPARAMOS EL EFECTO DE PARTÍCULAS DEL JUGADOR ---

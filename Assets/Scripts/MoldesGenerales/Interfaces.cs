@@ -1,16 +1,16 @@
 using UnityEngine;
 
 public interface IDamageable
-{
-    public void TakeDamage();
-    // public abstract void TakeDamage();
+{   
+    void TakeDamage(int amount);
 }
+
 public interface IInteractable
 {
     public void Interact();
-
 }
+
 public interface ICollectable
-{
-    public void Collect();
+{ 
+    void Collect();
 }
